@@ -1,4 +1,4 @@
-#+TITLE: DBMS
+#+TITLE: grtcdr's DBMS course notes
 #+OPTIONS: html-postamble:t toc:1
 
 * Introduction
@@ -537,9 +537,10 @@ SELECT MAX(prix), MIN(prix), AVG(prix) FROM plats WheRE idr = 'R1';
 #+END_SRC
 
 ** Question 14
+
 Afficher une liste numérotée des plats selon un ordre décroissant des prix.
 
-+ Un premier affichage concernera le numéro, le nom du plat et son prix:
++ Un premier affichage concernera le numéro, le nom du plat et son prix.
 #+BEGIN_SRC sql
 SELECT ROW_NUMBER() OVER(ORDER BY prix DESC) AS "N Ligne", ref_P, nomP, prix FROM Plats p;
 #+END_SRC
@@ -575,6 +576,7 @@ SELECT RANK() OVER(ORDER BY rating DESC), R.* FROM Restaurants R ORDER BY specia
 
 ** Question 18
 
+Calculer le prix moyen des plats de chaque restaurant.
 #+BEGIN_SRC sql
 SELECT AVG(prix) AS "Prix Moyen", P.idR, R.nom
 FROM plats P, restaurants R
@@ -584,6 +586,10 @@ GROUP BY P.idR, R.nom;
 
 ** Question 19
 
+Une offre promotionnelle a été lancée pour certains plats (comme indiqué sur l'extrait):
+- Si le prix initial du plat est entre 5 et 20 dinars et que son rating est > 2, alors le prix sera diminué de 10%.
+- Si le prix > 20 dinars et que le rating du restaurant = 5 alors le prix sera diminué de 15%.
+- Sinon pas de changements au niveau du prix.
 #+BEGIN_SRC sql
 SELECT idR, nomP, rating, prix As "Ancien Prix",
                   CASE
@@ -596,6 +602,7 @@ FROM plats;
 
 ** Question 20
 
+Afficher la liste des restaurants où tous les plats sont non disponibles.
 #+BEGIN_SRC sql
 SELECT * FROM Restaurants R, Plats P
 WHERE P.idR = R.idR
@@ -606,6 +613,7 @@ WHERE P.idR = R.idR and P.disponible = 'oui';
 
 ** Question 21
 
+Afficher la liste des plats avec gluten et qui sont disponibles à Tunis ou à Sousse.
 #+BEGIN_SRC sql
 SELECT * FROM Restaurants R
 INNER JOIN Plats P
@@ -615,8 +623,9 @@ WHERE P.disponible = 'non' AND P.freeGluten = 0 AND (VILLE = 'Tunis' OR VILLE = 
 
 ** Question 22
 
-Il y a deux façons de procéder, soit avec une jointure:
+Afficher les références des plats des commandes de la question 8.
 
++ Il y a deux façons de procéder, soit avec une jointure:
 #+begin_src sql
 SELECT ref_P FROM LC
 INNER JOIN commandes AS 'com'
@@ -626,8 +635,7 @@ ON com.idcli = cl.idcli
 WHERE cl.nom LIKE '%a%';
 #+end_src
 
-Ou avec une sélection imbriquée:
-
++ Ou avec une sélection imbriquée:
 #+BEGIN_SRC sql
 SELECT ref_P FROM LC 
 WHERE idc IN (SELECT idc FROM commandes WHERE idcli IN ( SELECT idcli FROM clients WHERE nom LIKE '%a%' ) )
@@ -635,12 +643,24 @@ WHERE idc IN (SELECT idc FROM commandes WHERE idcli IN ( SELECT idcli FROM clien
 
 ** Question 23
 
+Calculer le prix moyen des plats du restaurant Chili's.
 #+BEGIN_SRC sql
 SELECT AVG(prix) FROM plats WHERE idr = (SELECT idr FROM restaurants WHERE nom LIKE 'Chili''s');
 #+END_SRC
 
+** Question 24
+
+Afficher le nom des restaurants qui offrent des plats à moins de 15 dinars.
+#+begin_src sql
+  SELECT nom FROM restaurants r
+  INNER JOIN plats p
+  ON p.idR = r.idR
+  WHERE p.prix < 15;
+#+end_src
+
 ** Question 25
 
+Calculer le prix du plat le plus cher des restaurants italiens.
 #+begin_src sql
 SELECT nomP, prix FROM plats P
 INNER JOIN restaurants R
@@ -650,24 +670,32 @@ WHERE R.specialite = 'italienne' AND P.prix = (SELECT MAX(prix) FROM plats INNER
 
 ** Question 26
 
-*** A)
+Pour fidéliser les clients, Resto.tn offre un système de parrainage : un client peut parrainer
+d'autres clients et bénéficier de réductions privilégiées.
 
+*** a)
+
+Ajouter la colonne =parrain= de type number à la table =Clients=.
 #+BEGIN_SRC sql
 ALTER TABLE Clients
 ADD parrain NUMBER
 REFERENCES clients(idCli);
 #+END_SRC
 
-*** B)
+*** b)
 
+Marie Dupont est la marraine des clients 2,3 et 4. Sarah Ayadi est la marraine
+des clients 6,7 et 8. Mettez à jour les lignes adéquates.
 #+BEGIN_SRC sql
 UPDATE Clients SET
 parrain=(SELECT idCli from Clients WHERE nom='Dupont' AND prenom='Marie')
 WHERE idCli IN (2,3,4);
 #+END_SRC
 
-*** C)
+*** c)
 
+Afficher pour chaque client, son nom et prénom ainsi que le nom et prénom de
+son parrain (sa marraine).
 #+BEGIN_SRC sql
 SELECT C.nom, C.prenom, P.nom AS 'Nom du parrain', P.prenom AS 'Prenom du parrain'
 FROM clients P
@@ -677,6 +705,7 @@ ON C.idCli = P.parrain;
 
 ** Question 27
 
+Afficher la liste des clients fidèles (qui se rendent uniquement) au restaurant =R1=.
 #+BEGIN_SRC sql
 SELECT * FROM Clients Cli
 INNER JOIN Commandes Com
@@ -696,8 +725,12 @@ ON P.ref_P = LC.ref_P
 WHERE P.idR = 'R1';
 #+END_SRC
 
+** TODO Solve question 28
+
 ** Question 29
 
+Calculer le prix du plat le plus cher pour chaque spécialité, afficher pour cela le prix ainsi
+que la spécialité. Ordonner le résultat par prix décroissant.
 #+BEGIN_SRC sql
 SELECT MAX(prix), specialite from plats P, restaurants r 
 WHERE R.idR = P.idR GROUP BY specialite ORDER BY MAX(prix) DESC;
@@ -705,6 +738,8 @@ WHERE R.idR = P.idR GROUP BY specialite ORDER BY MAX(prix) DESC;
 
 ** Question 30
 
+Afficher le nombre de commandes effectuées par chaque client, en mentionnant son nom et
+son prénom en plus du nombre de ses commandes.
 #+BEGIN_SRC sql
 SELECT cli.nom, cli.prenom, COUNT(c.idc)
 FROM clients cli 
@@ -713,8 +748,10 @@ ON cli.idcli = c.idcli
 GROUP BY cli.nom, cli.prenom;
 #+END_SRC
 
-*** A)
+*** a)
 
+Affiner la requête pour n'afficher que les clients qui ont effectué plus d'une
+commande.
 #+BEGIN_SRC sql
 SELECT cli.nom, cli.prenom, count(c.idc)
 FROM clients cli 
@@ -726,6 +763,7 @@ HAVING COUNT(c.idc) > 1;
 
 ** Question 31
 
+Afficher les clients qui ont effectué le plus de commandes (référez-vous à la question 26).
 #+BEGIN_SRC sql
 SELECT cli.nom, cli.prenom, count(c.idc)
 FROM clients cli 
@@ -737,7 +775,18 @@ HAVING COUNT(c.idc) = ( SELECT MAX(COUNT(c.idc))
                         GROUP BY c.idc );
 #+END_SRC
 
+** TODO Solve question 32
+
 ** Question 33
+
+Faites le nécessaire pour avoir l'affichage de l'extrait suivant relatif à toutes les commandes
+de la base Resto.tn:
+
+| Détail Des Commandes                                                                                         |
+|--------------------------------------------------------------------------------------------------------------|
+| La commande 1 a été livrée au client Bali Rym au bout de 49 minutes par Ben Med Sami le 19 janvier 2018      |
+| La commande 2 a été livrée au client Ben Ahmed Med au bout de 76 minutes par Ayari Lotfi le 10 janvier 2018  |
+| La commande 3 a été livrée au client Ben Salah Khadija au bout de 15 minutes par Sadok Ahmed le 15 juin 2018 |
 
 #+BEGIN_SRC sql
 SELECT 'La commande ' || idC || ' a ete livree au client ' || cli.nom || ' ' || cli.prenom || ' par ' || liv.nom || ' ' || liv.prenom AS "Details Des Commandes" FROM Clients cli
@@ -763,7 +812,6 @@ ON liv.idL = com.idL;
 
 Afficher la liste des employés qui n'ont pas de commission. Cette liste doit
 être ordonnée selon un ordre descendant de leur nom.
-
 #+begin_src sql :comments org
   SELECT *
   FROM EMPLOYEES
@@ -774,7 +822,6 @@ Afficher la liste des employés qui n'ont pas de commission. Cette liste doit
 
 Afficher la liste des employés, leur nom, prénom et salaire. Cette liste doit
 être numérotée pour chaque département et selon un ordre descendant du salaire.
-
 #+begin_src sql :tangle yes :comments org
   SELECT ROW_NUMBER() OVER(ORDER BY DEPARTMENT_ID),
 	 LAST_NAME,
@@ -786,7 +833,16 @@ Afficher la liste des employés, leur nom, prénom et salaire. Cette liste doit
 
 *** Question 3
 
-Afficher le résultat suivant
+Afficher le résultat suivant:
+
+| nom et prénom    | numéro département |
+|------------------+--------------------|
+| Raphaely Den     |                 30 |
+| Khoo Alexander   |                 30 |
+| Baida Shelli     |                 30 |
+| Tobias Sigal     |                 30 |
+| Himuro Guy       |                 30 |
+| Colmenares Karen |                 30 |
 
 #+begin_src sql :tangle yes :comments org
   SELECT LAST_NAME || ' ' || FIRST_NAME AS "Nom et prenom",
@@ -797,7 +853,15 @@ Afficher le résultat suivant
 
 *** Question 4
 
-Afficher la liste des départements comme suit.
+Afficher la liste des départements comme suit:
+
+| ID DEPT | NOM DEPT | LOCATION |
+|---------+----------+----------|
+|      10 | Adm.     |     1700 |
+|      20 | Mar.     |     1800 |
+|      30 | Pur.     |     1700 |
+|      40 | Hum.     |     2400 |
+|      50 | Shi.     |     1500 |
 
 #+begin_src sql :tangle yes :comments org
   SELECT DEPARTMENT_ID AS "ID DEPT",
@@ -825,6 +889,8 @@ REVIEW.
 
 *** Question 6
 
+Afficher la liste des employés, l’année, le mois en lettre et le numéro du trimestre de
+leur date d’embauche par ordre décroissant de l’année.
 #+begin_src sql :tangle yes :comments org
   SELECT LAST_NAME,
 	 FIRST_NAME,
@@ -853,6 +919,7 @@ de mois travaillés).
 :END:
 *** Question 1
 
+Afficher le salaire maximum et minimum à partir de la table =EMPLOYEES=.
 #+begin_src sql :tangle yes :comments org
   SELECT MAX(salary), MIN(salary)
   FROM Employees;
@@ -860,6 +927,8 @@ de mois travaillés).
 
 *** Question 2
 
+Afficher le salaire moyen par département en arrondissant la valeur à 2 chiffres après
+la virgule. Afficher aussi l’identifiant du département.
 #+begin_src sql :tangle yes :comments org
   SELECT D.Department_ID, ROUND(AVG(salary), 2)
   FROM Employees E
@@ -870,6 +939,18 @@ de mois travaillés).
 
 *** Question 3
 
+Afficher pour chaque département le nombre des employés qui lui
+sontaffectés. Le résultat doit s’afficher de cette manière:
+
+| identifiant | nbr d'employés |
+|-------------+----------------|
+|         100 |              6 |
+|          30 |              6 |
+|             |              1 |
+|          90 |              3 |
+|          20 |              2 |
+|          70 |              1 |
+
 #+begin_src sql :tangle yes :comments org
   SELECT COUNT(Employee_ID)
   FROM Employees E
@@ -879,6 +960,18 @@ de mois travaillés).
 #+end_src
 
 *** Question 4
+
+Modifier la requête précédente pour avoir ces deux résultats:
+
+
+| identifiant | nbr d'employés |
+|-------------+----------------|
+|          10 |              1 |
+|          20 |              2 |
+|          30 |              6 |
+|          40 |              1 |
+|          50 |             45 |
+|          60 |              5 |
 
 #+begin_src sql :tangle yes :comments org
     SELECT D.Department_ID AS "identifiant", COUNT(Employee_ID) AS "nbr des employes"
@@ -894,6 +987,8 @@ de mois travaillés).
 :END:
 *** Question 1
 
+Afficher les noms et prénoms des employés et respectivement le nom du département
+auquel ils sont affectés.
 #+begin_src sql :tangle yes :comments org
   SELECT E.FIRST_NAME, E.LAST_NAME, D.DEPARTMENT_NAME
   FROM EMPLOYEES E
@@ -903,6 +998,12 @@ de mois travaillés).
 
 *** Question 2
 
+Afficher les colonnes suivantes:
++ =DEPARTMENT_NAME=
++ =COUNTRY_NAME=
++ =REGION_NAME=
+
+Le résultat doit être trié par nom de département.
 #+begin_src sql :tangle yes :comments org
   SELECT D.DEPARTMENT_NAME, C.COUNTRY_NAME, R.REGION_NAME
   FROM DEPARTMENTS D
@@ -916,6 +1017,7 @@ de mois travaillés).
 
 *** Question 3
 
+Afficher la liste des employés et respectivement le nom de leur =JOB_TITLE=.
 #+begin_src sql :tangle yes :comments org
   SELECT E.*, J.JOB_TITLE
   FROM EMPLOYEES E
@@ -925,6 +1027,9 @@ de mois travaillés).
 
 *** Question 4
 
+Afficher la somme du nombre de mois travaillés par tous les employés
+relativement à chaque département. Arrondir la valeur obtenue à 2
+chiffres après la virgule. Afficher le nom du département.
 #+begin_src sql :tangle yes :comments org
   SELECT SUM(ROUND(EXTRACT(MONTH FROM HIRE_DATE), 2))
   FROM EMPLOYEES E
@@ -935,6 +1040,8 @@ de mois travaillés).
 
 *** Question 5
 
+Afficher pour chaque employé, son nom et prénom, et respectivement le
+nom et prénom de son manager.
 #+begin_src sql :tangle yes :comments org
   SELECT E.FIRST_NAME, E.LAST_NAME, M.FIRST_NAME, M.LAST_NAME
   FROM EMPLOYEES E
@@ -949,7 +1056,6 @@ de mois travaillés).
 *** Question 1
 
 Afficher la liste des départements auxquels aucun employé n'est affecté.
-
 #+begin_src sql :tangle yes :comments org
   SELECT D.*
   FROM DEPARTMENTS D
@@ -962,7 +1068,6 @@ Afficher la liste des départements auxquels aucun employé n'est affecté.
 *** Question 2
 
 Afficher les détails des employés dont le salaire est égal au salaire minimum.
-
 #+begin_src sql :tangle yes :comments org
   SELECT *
   FROM EMPLOYEES
@@ -973,7 +1078,6 @@ Afficher les détails des employés dont le salaire est égal au salaire minimum
 
 Afficher les détails relatifs aux employés qui ont le même manager que l'employé dont
 l'identifiant est égal à 110.
-
 #+begin_src sql :tangle yes :comments org
   SELECT *
   FROM EMPLOYEES
@@ -983,7 +1087,6 @@ l'identifiant est égal à 110.
 *** Question 4
 
 Afficher le résultat suivant...
-
 #+NAME: Question 4
 #+begin_src sql :tangle yes :comments org
   /* This is the closest thing I have gotten to the answer :-( */
@@ -996,7 +1099,6 @@ Afficher le résultat suivant...
 
 Afficher la liste des employés et respectivement le nom de leur JOB. (En utilisant une
 sous requête)
-
 #+begin_src sql :tangle yes :comments org
   SELECT E.*, ( SELECT J.JOB_TITLE
 		FROM JOBS J
@@ -1007,8 +1109,7 @@ sous requête)
 *** Question 6
 
 Afficher les employés qui touche un salaire supérieur à celui de tous les directeurs
-commerciaux (~job_id='SA_MAN'~)
-
+commerciaux (~JOB_ID='SA_MAN'~)
 #+begin_src sql :tangle yes :comments org
   SELECT *
   FROM EMPLOYEES E
@@ -1023,7 +1124,6 @@ commerciaux (~job_id='SA_MAN'~)
 
 Afficher la liste des employés qui gagnent moins que le salaire moyen de leur
 département.
-
 #+begin_src sql :tangle yes :comments org
   SELECT *
   FROM EMPLOYEES E

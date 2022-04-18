@@ -2,7 +2,9 @@
 
 Hey there, third year students!
 
-This repository houses my personal (work in progress) notes for the Database Management Systems class, [[file:dbms.org][have a read.]]
+This repository houses my personal (work in progress) notes for ESPRIT's Database Management Systems class.
+
+Go on, [[file:dbms.org][have a read!]]
 
 * Contributing
 If you notice any issues or typos, please [[https://github.com/grtcdr/ESPRIT-DBMS-Y3/issues][file an issue]], or [[https://github.com/vivmaniero/ESPRIT-DBMS-Y3/pulls][submit a PR]] directly if you're familiar with [[https://orgmode.org/][Org Mode]] (the document format these notes are written in).

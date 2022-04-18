@@ -446,10 +446,8 @@ SOFTWARE.
   `----
 
 
-2.6.1 L'utilisation de cette séquence sera-t-il restreint uniquement à la
--------------------------------------------------------------------------
-
-  table `Restaurants'?
+2.6.1 L'utilisation de cette séquence sera-t-il restreint uniquement à la table `Restaurants'?
+----------------------------------------------------------------------------------------------
 
   Cette sequence n'est pas restreinte à la table `Restaurants', toutes
   autres tables peuvent l'utiliser.

@@ -364,8 +364,7 @@ données au niveau de la table =Restaurants=. Cette séquence commence avec la v
 CREATE SEQUENCE seq_res INCREMENT BY 1 START WITH 1;
 #+END_SRC
 
-*** L'utilisation de cette séquence sera-t-il restreint uniquement à la
-table =Restaurants=?
+*** L'utilisation de cette séquence sera-t-il restreint uniquement à la table =Restaurants=?
 
 Cette sequence n'est pas restreinte à la table =Restaurants=, toutes
 autres tables peuvent l'utiliser.

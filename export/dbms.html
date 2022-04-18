@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-04-18 Mon 10:07 -->
+<!-- 2022-04-18 Mon 10:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>grtcdr's DBMS course notes</title>
@@ -201,21 +201,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgb0ee39f">1. Introduction</a></li>
-<li><a href="#orge684d6b">2. TP1: Langage de Définition des Données (LDD)</a></li>
-<li><a href="#org077b5fe">3. TP3: Langage d'Interrogation des Données (LID)</a></li>
-<li><a href="#org023b9a1">4. TP HR</a></li>
-<li><a href="#orgff87a70">5. PL/SQL</a></li>
+<li><a href="#orgcc94069">1. Introduction</a></li>
+<li><a href="#orgb782e9d">2. TP1: Langage de Définition des Données (LDD)</a></li>
+<li><a href="#org53ab134">3. TP3: Langage d'Interrogation des Données (LID)</a></li>
+<li><a href="#org9d5fe61">4. TP HR</a></li>
+<li><a href="#orga35ea63">5. PL/SQL</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgb0ee39f" class="outline-2">
-<h2 id="orgb0ee39f"><span class="section-number-2">1.</span> Introduction</h2>
+<div id="outline-container-orgcc94069" class="outline-2">
+<h2 id="orgcc94069"><span class="section-number-2">1.</span> Introduction</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org9fd2b19" class="outline-4">
-<h4 id="org9fd2b19"><span class="section-number-4">1.0.1.</span> Créer des tables</h4>
+<div id="outline-container-org8c66864" class="outline-4">
+<h4 id="org8c66864"><span class="section-number-4">1.0.1.</span> Créer des tables</h4>
 <div class="outline-text-4" id="text-1-0-1">
 <p>
 Dans l'exemple suivant, les contraintes seront définies sur la même
@@ -260,8 +260,8 @@ définir nos contraintes à la fin de la requête.
 </div>
 </div>
 
-<div id="outline-container-org8e7ceb4" class="outline-4">
-<h4 id="org8e7ceb4"><span class="section-number-4">1.0.2.</span> Afficher la structure des tables</h4>
+<div id="outline-container-org1e5b235" class="outline-4">
+<h4 id="org1e5b235"><span class="section-number-4">1.0.2.</span> Afficher la structure des tables</h4>
 <div class="outline-text-4" id="text-1-0-2">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">DESCRIBE</span> joueurs;
@@ -283,8 +283,8 @@ Vous préférerez peut-être utiliser ceci.
 </div>
 </div>
 
-<div id="outline-container-orgfdf05ff" class="outline-4">
-<h4 id="orgfdf05ff"><span class="section-number-4">1.0.3.</span> Contraindre des tables</h4>
+<div id="outline-container-org4af24d7" class="outline-4">
+<h4 id="org4af24d7"><span class="section-number-4">1.0.3.</span> Contraindre des tables</h4>
 <div class="outline-text-4" id="text-1-0-3">
 <p>
 Voir <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14200/clauses002.htm">ce document</a> pour plus d'informations sur les contraintes.
@@ -330,8 +330,8 @@ Nous en avons besoin! Réactivons-la.
 </div>
 </div>
 
-<div id="outline-container-orgda795f6" class="outline-4">
-<h4 id="orgda795f6"><span class="section-number-4">1.0.4.</span> Modifier la structure des tables</h4>
+<div id="outline-container-org1e71f62" class="outline-4">
+<h4 id="org1e71f62"><span class="section-number-4">1.0.4.</span> Modifier la structure des tables</h4>
 <div class="outline-text-4" id="text-1-0-4">
 <p>
 <b>Ajouter</b> des <i>colonnes</i> est facile, trop facile en fait.
@@ -383,8 +383,8 @@ Vous souhaitez peut-être <b>supprimer</b> une <i>table</i>.
 </div>
 </div>
 
-<div id="outline-container-org2c8a12c" class="outline-4">
-<h4 id="org2c8a12c"><span class="section-number-4">1.0.5.</span> Créer des séquences</h4>
+<div id="outline-container-orgbe5fbe0" class="outline-4">
+<h4 id="orgbe5fbe0"><span class="section-number-4">1.0.5.</span> Créer des séquences</h4>
 <div class="outline-text-4" id="text-1-0-5">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">create</span> <span style="color: #5317ac;">sequence</span> <span style="color: #721045;">seq_joueurs</span> increment <span style="color: #5317ac;">by</span> 1 <span style="color: #5317ac;">start</span> <span style="color: #5317ac;">with</span> 1;
@@ -393,8 +393,8 @@ Vous souhaitez peut-être <b>supprimer</b> une <i>table</i>.
 </div>
 </div>
 
-<div id="outline-container-org8a68298" class="outline-4">
-<h4 id="org8a68298"><span class="section-number-4">1.0.6.</span> Utiliser des séquences</h4>
+<div id="outline-container-orgd3fc8e0" class="outline-4">
+<h4 id="orgd3fc8e0"><span class="section-number-4">1.0.6.</span> Utiliser des séquences</h4>
 <div class="outline-text-4" id="text-1-0-6">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #505050;">/* Example 1 */</span>
@@ -418,8 +418,8 @@ Vous souhaitez peut-être <b>supprimer</b> une <i>table</i>.
 </div>
 </div>
 
-<div id="outline-container-org11933bd" class="outline-4">
-<h4 id="org11933bd"><span class="section-number-4">1.0.7.</span> Afficher la valeur des séquences</h4>
+<div id="outline-container-org3ba55c0" class="outline-4">
+<h4 id="org3ba55c0"><span class="section-number-4">1.0.7.</span> Afficher la valeur des séquences</h4>
 <div class="outline-text-4" id="text-1-0-7">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">select</span> seq_joueurs.currval <span style="color: #5317ac;">from</span> joueurs;
@@ -429,19 +429,19 @@ Vous souhaitez peut-être <b>supprimer</b> une <i>table</i>.
 </div>
 </div>
 
-<div id="outline-container-orge684d6b" class="outline-2">
-<h2 id="orge684d6b"><span class="section-number-2">2.</span> TP1: Langage de Définition des Données (LDD)</h2>
+<div id="outline-container-orgb782e9d" class="outline-2">
+<h2 id="orgb782e9d"><span class="section-number-2">2.</span> TP1: Langage de Définition des Données (LDD)</h2>
 <div class="outline-text-2" id="text-2">
 
-<div id="org968bee6" class="figure">
+<div id="org075a8ac" class="figure">
 <p><img src="schema-a.png" alt="schema-a.png" />
 </p>
 <p><span class="figure-number">Figure 1: </span>LDD Schemas</p>
 </div>
 </div>
 
-<div id="outline-container-org5bd0c7d" class="outline-3">
-<h3 id="org5bd0c7d"><span class="section-number-3">2.1.</span> Question 1</h3>
+<div id="outline-container-orgfcc1163" class="outline-3">
+<h3 id="orgfcc1163"><span class="section-number-3">2.1.</span> Question 1</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 <span class="underline">Énoncé</span>: Donner l'ordre de création des tables.
@@ -463,8 +463,8 @@ les créer dans le bon ordre:
 </div>
 </div>
 
-<div id="outline-container-org4b6644e" class="outline-3">
-<h3 id="org4b6644e"><span class="section-number-3">2.2.</span> Question 2</h3>
+<div id="outline-container-orgde5fd51" class="outline-3">
+<h3 id="orgde5fd51"><span class="section-number-3">2.2.</span> Question 2</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Créer toutes les tables en tenant en considération les contraintes suivantes:
@@ -482,8 +482,8 @@ Créer toutes les tables en tenant en considération les contraintes suivantes:
 </ul>
 </div>
 
-<div id="outline-container-orgb3ff616" class="outline-4">
-<h4 id="orgb3ff616"><span class="section-number-4">2.2.1.</span> Création de la table restaurants</h4>
+<div id="outline-container-org93b1701" class="outline-4">
+<h4 id="org93b1701"><span class="section-number-4">2.2.1.</span> Création de la table restaurants</h4>
 <div class="outline-text-4" id="text-2-2-1">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">restaurants</span> (
@@ -506,8 +506,8 @@ Créer toutes les tables en tenant en considération les contraintes suivantes:
 </div>
 </div>
 
-<div id="outline-container-org510c0bd" class="outline-4">
-<h4 id="org510c0bd"><span class="section-number-4">2.2.2.</span> Création de la table plats</h4>
+<div id="outline-container-orgee04652" class="outline-4">
+<h4 id="orgee04652"><span class="section-number-4">2.2.2.</span> Création de la table plats</h4>
 <div class="outline-text-4" id="text-2-2-2">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">plats</span> (
@@ -533,8 +533,8 @@ Créer toutes les tables en tenant en considération les contraintes suivantes:
 </div>
 </div>
 
-<div id="outline-container-org4085e37" class="outline-4">
-<h4 id="org4085e37"><span class="section-number-4">2.2.3.</span> Création de la table livreurs</h4>
+<div id="outline-container-org6276e99" class="outline-4">
+<h4 id="org6276e99"><span class="section-number-4">2.2.3.</span> Création de la table livreurs</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">livreurs</span> (
@@ -558,8 +558,8 @@ Créer toutes les tables en tenant en considération les contraintes suivantes:
 </div>
 </div>
 
-<div id="outline-container-orgdef60e7" class="outline-4">
-<h4 id="orgdef60e7"><span class="section-number-4">2.2.4.</span> Création de la table clients</h4>
+<div id="outline-container-orgee76310" class="outline-4">
+<h4 id="orgee76310"><span class="section-number-4">2.2.4.</span> Création de la table clients</h4>
 <div class="outline-text-4" id="text-2-2-4">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">clients</span> (
@@ -580,8 +580,8 @@ Créer toutes les tables en tenant en considération les contraintes suivantes:
 </div>
 </div>
 
-<div id="outline-container-orgcd27be1" class="outline-4">
-<h4 id="orgcd27be1"><span class="section-number-4">2.2.5.</span> Création de la table commandes</h4>
+<div id="outline-container-org1111eb7" class="outline-4">
+<h4 id="org1111eb7"><span class="section-number-4">2.2.5.</span> Création de la table commandes</h4>
 <div class="outline-text-4" id="text-2-2-5">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">commandes</span> (
@@ -608,8 +608,8 @@ Créer toutes les tables en tenant en considération les contraintes suivantes:
 </div>
 </div>
 
-<div id="outline-container-orgdcb8933" class="outline-4">
-<h4 id="orgdcb8933"><span class="section-number-4">2.2.6.</span> Création de la table lignecommande</h4>
+<div id="outline-container-orgd7a6164" class="outline-4">
+<h4 id="orgd7a6164"><span class="section-number-4">2.2.6.</span> Création de la table lignecommande</h4>
 <div class="outline-text-4" id="text-2-2-6">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">lignecommande</span> (
@@ -633,8 +633,8 @@ Créer toutes les tables en tenant en considération les contraintes suivantes:
 </div>
 </div>
 
-<div id="outline-container-org16033df" class="outline-3">
-<h3 id="org16033df"><span class="section-number-3">2.3.</span> Question 3</h3>
+<div id="outline-container-orged9c29e" class="outline-3">
+<h3 id="orged9c29e"><span class="section-number-3">2.3.</span> Question 3</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Changer le type de la colonne disponible de la table <code>Plats</code> en chaine
@@ -651,8 +651,8 @@ non par défaut. Ajouter les contraintes nécessaires.
 </div>
 </div>
 
-<div id="outline-container-orgfd7a203" class="outline-3">
-<h3 id="orgfd7a203"><span class="section-number-3">2.4.</span> Question 4</h3>
+<div id="outline-container-orgf26f00b" class="outline-3">
+<h3 id="orgf26f00b"><span class="section-number-3">2.4.</span> Question 4</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 Ajouter une colonne rating au niveau de la table <code>Restaurants</code>. Ajouter
@@ -670,8 +670,8 @@ propriétés que la colonne rating de la table PLATS.
 </div>
 </div>
 
-<div id="outline-container-orgc046036" class="outline-3">
-<h3 id="orgc046036"><span class="section-number-3">2.5.</span> Question 5</h3>
+<div id="outline-container-org77e0ac2" class="outline-3">
+<h3 id="org77e0ac2"><span class="section-number-3">2.5.</span> Question 5</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 Créer un synonyme public <code>LC</code> pour la table <code>LIGNECOMMANDE</code>.
@@ -682,8 +682,8 @@ Créer un synonyme public <code>LC</code> pour la table <code>LIGNECOMMANDE</cod
 </div>
 </div>
 
-<div id="outline-container-org7a52abb" class="outline-4">
-<h4 id="org7a52abb"><span class="section-number-4">2.5.1.</span> Lancer une description sur la table en utilisant le synonyme.</h4>
+<div id="outline-container-orgb1f8f11" class="outline-4">
+<h4 id="orgb1f8f11"><span class="section-number-4">2.5.1.</span> Lancer une description sur la table en utilisant le synonyme.</h4>
 <div class="outline-text-4" id="text-2-5-1">
 <div class="org-src-container">
 <pre class="src src-sql"><span style="color: #5317ac;">DESCRIBE</span> LC;
@@ -693,8 +693,8 @@ Créer un synonyme public <code>LC</code> pour la table <code>LIGNECOMMANDE</cod
 </div>
 </div>
 
-<div id="outline-container-orgfd4b7d7" class="outline-3">
-<h3 id="orgfd4b7d7"><span class="section-number-3">2.6.</span> Question 6</h3>
+<div id="outline-container-org3cdeb08" class="outline-3">
+<h3 id="org3cdeb08"><span class="section-number-3">2.6.</span> Question 6</h3>
 <div class="outline-text-3" id="text-2-6">
 <p>
 Créer une séquence <code>SEQ_RES</code> (qui sera utilisée dans le prochain TP) pour insérer des
@@ -707,8 +707,8 @@ données au niveau de la table <code>Restaurants</code>. Cette séquence commenc
 </div>
 </div>
 
-<div id="outline-container-orgab7b537" class="outline-4">
-<h4 id="orgab7b537"><span class="section-number-4">2.6.1.</span> L'utilisation de cette séquence sera-t-il restreint uniquement à la</h4>
+<div id="outline-container-org35645f4" class="outline-4">
+<h4 id="org35645f4"><span class="section-number-4">2.6.1.</span> L'utilisation de cette séquence sera-t-il restreint uniquement à la</h4>
 <div class="outline-text-4" id="text-2-6-1">
 <p>
 table <code>Restaurants</code>?
@@ -722,8 +722,8 @@ autres tables peuvent l'utiliser.
 </div>
 </div>
 
-<div id="outline-container-orgb3bccbe" class="outline-3">
-<h3 id="orgb3bccbe"><span class="section-number-3">2.7.</span> Question 7</h3>
+<div id="outline-container-org15eb6b4" class="outline-3">
+<h3 id="org15eb6b4"><span class="section-number-3">2.7.</span> Question 7</h3>
 <div class="outline-text-3" id="text-2-7">
 <p>
 Créer une vue <code>V_RESTO_GLUTF</code> qui permet de lister les restaurants qui proposent des
@@ -744,8 +744,8 @@ ville du restaurant ainsi que le nom, le prix et le rating du plat.
 </div>
 </div>
 
-<div id="outline-container-org09d7252" class="outline-3">
-<h3 id="org09d7252"><span class="section-number-3">2.8.</span> Question 8</h3>
+<div id="outline-container-orgae8f3ba" class="outline-3">
+<h3 id="orgae8f3ba"><span class="section-number-3">2.8.</span> Question 8</h3>
 <div class="outline-text-3" id="text-2-8">
 <p>
 Créer une vue <code>V_RESTO_TUN</code> ne permettant que la manipulation des restaurants de
@@ -760,8 +760,8 @@ spécialité tunisienne.
 </div>
 </div>
 
-<div id="outline-container-org7b68a48" class="outline-3">
-<h3 id="org7b68a48"><span class="section-number-3">2.9.</span> Question 9</h3>
+<div id="outline-container-org097b9ac" class="outline-3">
+<h3 id="org097b9ac"><span class="section-number-3">2.9.</span> Question 9</h3>
 <div class="outline-text-3" id="text-2-9">
 <p>
 Créer une vue <code>V_COM_P_DET</code> qui permet de lister les détails des commandes payées
@@ -782,8 +782,8 @@ et les quantités commandées.
 </div>
 </div>
 
-<div id="outline-container-org2a91932" class="outline-3">
-<h3 id="org2a91932"><span class="section-number-3">2.10.</span> Question 10</h3>
+<div id="outline-container-org39eb133" class="outline-3">
+<h3 id="org39eb133"><span class="section-number-3">2.10.</span> Question 10</h3>
 <div class="outline-text-3" id="text-2-10">
 <p>
 Créer un index <code>IND_GLU</code> permettant l'accélération de la recherche des plats sans gluten.
@@ -795,8 +795,8 @@ Créer un index <code>IND_GLU</code> permettant l'accélération de la recherche
 </div>
 </div>
 
-<div id="outline-container-org5d40104" class="outline-4">
-<h4 id="org5d40104"><span class="section-number-4">2.10.1.</span> Cet index peut-il être unique?</h4>
+<div id="outline-container-org50e7dce" class="outline-4">
+<h4 id="org50e7dce"><span class="section-number-4">2.10.1.</span> Cet index peut-il être unique?</h4>
 <div class="outline-text-4" id="text-2-10-1">
 <p>
 Non, parcequ'il n'y a aucune garantie que la valeur de la colonne freeGluten va etre unique pour tout les plats.
@@ -807,12 +807,12 @@ Non, parcequ'il n'y a aucune garantie que la valeur de la colonne freeGluten va 
 </div>
 
 
-<div id="outline-container-org077b5fe" class="outline-2">
-<h2 id="org077b5fe"><span class="section-number-2">3.</span> TP3: Langage d'Interrogation des Données (LID)</h2>
+<div id="outline-container-org53ab134" class="outline-2">
+<h2 id="org53ab134"><span class="section-number-2">3.</span> TP3: Langage d'Interrogation des Données (LID)</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org1d6edbc" class="outline-3">
-<h3 id="org1d6edbc"><span class="section-number-3">3.1.</span> Question 1</h3>
+<div id="outline-container-org1c44f48" class="outline-3">
+<h3 id="org1c44f48"><span class="section-number-3">3.1.</span> Question 1</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Afficher toutes les informations concernant tous les restaurants.
@@ -824,8 +824,8 @@ Afficher toutes les informations concernant tous les restaurants.
 </div>
 </div>
 
-<div id="outline-container-org16ef689" class="outline-3">
-<h3 id="org16ef689"><span class="section-number-3">3.2.</span> Question 2</h3>
+<div id="outline-container-org90746ab" class="outline-3">
+<h3 id="org90746ab"><span class="section-number-3">3.2.</span> Question 2</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 Afficher la liste des restaurants de chaque ville, ordonner l'affichage par ordre décroissant
@@ -838,8 +838,8 @@ des villes.
 </div>
 </div>
 
-<div id="outline-container-orgd44b2d8" class="outline-3">
-<h3 id="orgd44b2d8"><span class="section-number-3">3.3.</span> Question 3</h3>
+<div id="outline-container-org347a44c" class="outline-3">
+<h3 id="org347a44c"><span class="section-number-3">3.3.</span> Question 3</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Afficher les ID des plats commandés au moins une fois.
@@ -854,8 +854,8 @@ Afficher les ID des plats commandés au moins une fois.
 </div>
 </div>
 
-<div id="outline-container-orga148090" class="outline-3">
-<h3 id="orga148090"><span class="section-number-3">3.4.</span> Question 4</h3>
+<div id="outline-container-org9a71605" class="outline-3">
+<h3 id="org9a71605"><span class="section-number-3">3.4.</span> Question 4</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Afficher le nom des restaurants dont le rating n'a pas été calculé.
@@ -867,8 +867,8 @@ Afficher le nom des restaurants dont le rating n'a pas été calculé.
 </div>
 </div>
 
-<div id="outline-container-org682e539" class="outline-3">
-<h3 id="org682e539"><span class="section-number-3">3.5.</span> Question 5</h3>
+<div id="outline-container-org4dda9ad" class="outline-3">
+<h3 id="org4dda9ad"><span class="section-number-3">3.5.</span> Question 5</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
 Afficher la liste des plats disponibles par ordre décroissant prix.
@@ -880,8 +880,8 @@ Afficher la liste des plats disponibles par ordre décroissant prix.
 </div>
 </div>
 
-<div id="outline-container-org433e596" class="outline-3">
-<h3 id="org433e596"><span class="section-number-3">3.6.</span> Question 6</h3>
+<div id="outline-container-org8984be8" class="outline-3">
+<h3 id="org8984be8"><span class="section-number-3">3.6.</span> Question 6</h3>
 <div class="outline-text-3" id="text-3-6">
 <p>
 Afficher les restaurants de spécialité tunisienne et qui sont situés à
@@ -896,8 +896,8 @@ Afficher les restaurants de spécialité tunisienne et qui sont situés à
 </div>
 </div>
 
-<div id="outline-container-org0a7aa63" class="outline-3">
-<h3 id="org0a7aa63"><span class="section-number-3">3.7.</span> Question 7</h3>
+<div id="outline-container-org519d70c" class="outline-3">
+<h3 id="org519d70c"><span class="section-number-3">3.7.</span> Question 7</h3>
 <div class="outline-text-3" id="text-3-7">
 <p>
 Afficher les noms en majuscules, les prénoms en minuscule, les villes
@@ -912,8 +912,8 @@ avec la première lettre en majuscule de tous les clients de
 </div>
 </div>
 
-<div id="outline-container-orge2900b9" class="outline-3">
-<h3 id="orge2900b9"><span class="section-number-3">3.8.</span> Question 8</h3>
+<div id="outline-container-orgf51d7e2" class="outline-3">
+<h3 id="orgf51d7e2"><span class="section-number-3">3.8.</span> Question 8</h3>
 <div class="outline-text-3" id="text-3-8">
 <p>
 Afficher la liste des clients dont la première lettre de leur nom est <i>'b'</i> et où leur prénom se
@@ -927,8 +927,8 @@ termine par <i>'d'</i> ou contient la lettre <i>'a'</i>.
 </div>
 </div>
 
-<div id="outline-container-org4c8ba84" class="outline-3">
-<h3 id="org4c8ba84"><span class="section-number-3">3.9.</span> Question 9</h3>
+<div id="outline-container-org4b4d4cd" class="outline-3">
+<h3 id="org4b4d4cd"><span class="section-number-3">3.9.</span> Question 9</h3>
 <div class="outline-text-3" id="text-3-9">
 <p>
 Afficher la liste des livreurs qui ont été embauchés depuis 8 mois.
@@ -940,8 +940,8 @@ Afficher la liste des livreurs qui ont été embauchés depuis 8 mois.
 </div>
 </div>
 
-<div id="outline-container-org21e4f11" class="outline-3">
-<h3 id="org21e4f11"><span class="section-number-3">3.10.</span> Question 10</h3>
+<div id="outline-container-org0137739" class="outline-3">
+<h3 id="org0137739"><span class="section-number-3">3.10.</span> Question 10</h3>
 <div class="outline-text-3" id="text-3-10">
 <p>
 Afficher toutes les commandes qui ont été passées pendant le troisième
@@ -956,8 +956,8 @@ trimestre de l'année dernière.
 </div>
 </div>
 
-<div id="outline-container-orga780bb4" class="outline-3">
-<h3 id="orga780bb4"><span class="section-number-3">3.11.</span> Question 11</h3>
+<div id="outline-container-org5942f38" class="outline-3">
+<h3 id="org5942f38"><span class="section-number-3">3.11.</span> Question 11</h3>
 <div class="outline-text-3" id="text-3-11">
 <p>
 Afficher la liste des plats sans gluten dont le prix est compris entre
@@ -973,8 +973,8 @@ affichés en premier lieu).
 </div>
 </div>
 
-<div id="outline-container-org570ad8f" class="outline-3">
-<h3 id="org570ad8f"><span class="section-number-3">3.12.</span> Question 12</h3>
+<div id="outline-container-org583e4f2" class="outline-3">
+<h3 id="org583e4f2"><span class="section-number-3">3.12.</span> Question 12</h3>
 <div class="outline-text-3" id="text-3-12">
 <p>
 Afficher les commandes qui ont été livrées en moins de 30 minutes,
@@ -993,8 +993,8 @@ par ordre décroissant.
 </div>
 </div>
 
-<div id="outline-container-orgc2dd584" class="outline-3">
-<h3 id="orgc2dd584"><span class="section-number-3">3.13.</span> Question 13</h3>
+<div id="outline-container-orgccb4e0a" class="outline-3">
+<h3 id="orgccb4e0a"><span class="section-number-3">3.13.</span> Question 13</h3>
 <div class="outline-text-3" id="text-3-13">
 <p>
 Afficher le prix du plat le plus cher, celui du plat le moins cher ainsi que le prix moyen
@@ -1028,8 +1028,8 @@ arrondi des plats et ce pour:
 </div>
 </div>
 
-<div id="outline-container-orga47e2bf" class="outline-3">
-<h3 id="orga47e2bf"><span class="section-number-3">3.14.</span> Question 14</h3>
+<div id="outline-container-orgc85c3d8" class="outline-3">
+<h3 id="orgc85c3d8"><span class="section-number-3">3.14.</span> Question 14</h3>
 <div class="outline-text-3" id="text-3-14">
 <p>
 Afficher une liste numérotée des plats selon un ordre décroissant des prix.
@@ -1053,8 +1053,8 @@ Afficher une liste numérotée des plats selon un ordre décroissant des prix.
 </div>
 </div>
 
-<div id="outline-container-org329b7f5" class="outline-3">
-<h3 id="org329b7f5"><span class="section-number-3">3.15.</span> Question 15</h3>
+<div id="outline-container-orga1573ea" class="outline-3">
+<h3 id="orga1573ea"><span class="section-number-3">3.15.</span> Question 15</h3>
 <div class="outline-text-3" id="text-3-15">
 <p>
 Affiner la liste précédente selon la composition des plats (avec ou sans gluten).
@@ -1066,8 +1066,8 @@ Affiner la liste précédente selon la composition des plats (avec ou sans glute
 </div>
 </div>
 
-<div id="outline-container-orgafd87ef" class="outline-3">
-<h3 id="orgafd87ef"><span class="section-number-3">3.16.</span> Question 16</h3>
+<div id="outline-container-orgf408b61" class="outline-3">
+<h3 id="orgf408b61"><span class="section-number-3">3.16.</span> Question 16</h3>
 <div class="outline-text-3" id="text-3-16">
 <p>
 Afficher un classement des restaurants selon le plus noté (rating),
@@ -1081,8 +1081,8 @@ affichées.
 </div>
 </div>
 
-<div id="outline-container-org6e0ea0d" class="outline-3">
-<h3 id="org6e0ea0d"><span class="section-number-3">3.17.</span> Question 17</h3>
+<div id="outline-container-orgc917ea9" class="outline-3">
+<h3 id="orgc917ea9"><span class="section-number-3">3.17.</span> Question 17</h3>
 <div class="outline-text-3" id="text-3-17">
 <p>
 Affiner l'affichage précédent avec un classement des restaurants les plus notés selon les
@@ -1095,8 +1095,8 @@ spécialités.
 </div>
 </div>
 
-<div id="outline-container-org01ef9fd" class="outline-3">
-<h3 id="org01ef9fd"><span class="section-number-3">3.18.</span> Question 18</h3>
+<div id="outline-container-orgab64a56" class="outline-3">
+<h3 id="orgab64a56"><span class="section-number-3">3.18.</span> Question 18</h3>
 <div class="outline-text-3" id="text-3-18">
 <p>
 Calculer le prix moyen des plats de chaque restaurant.
@@ -1111,8 +1111,8 @@ Calculer le prix moyen des plats de chaque restaurant.
 </div>
 </div>
 
-<div id="outline-container-orgb851691" class="outline-3">
-<h3 id="orgb851691"><span class="section-number-3">3.19.</span> Question 19</h3>
+<div id="outline-container-org9a59675" class="outline-3">
+<h3 id="org9a59675"><span class="section-number-3">3.19.</span> Question 19</h3>
 <div class="outline-text-3" id="text-3-19">
 <p>
 Une offre promotionnelle a été lancée pour certains plats (comme indiqué sur l'extrait):
@@ -1135,8 +1135,8 @@ Une offre promotionnelle a été lancée pour certains plats (comme indiqué sur
 </div>
 </div>
 
-<div id="outline-container-orgf144313" class="outline-3">
-<h3 id="orgf144313"><span class="section-number-3">3.20.</span> Question 20</h3>
+<div id="outline-container-org43037ea" class="outline-3">
+<h3 id="org43037ea"><span class="section-number-3">3.20.</span> Question 20</h3>
 <div class="outline-text-3" id="text-3-20">
 <p>
 Afficher la liste des restaurants où tous les plats sont non disponibles.
@@ -1152,8 +1152,8 @@ MINUS
 </div>
 </div>
 
-<div id="outline-container-org61e9f52" class="outline-3">
-<h3 id="org61e9f52"><span class="section-number-3">3.21.</span> Question 21</h3>
+<div id="outline-container-org58eb0e3" class="outline-3">
+<h3 id="org58eb0e3"><span class="section-number-3">3.21.</span> Question 21</h3>
 <div class="outline-text-3" id="text-3-21">
 <p>
 Afficher la liste des plats avec gluten et qui sont disponibles à Tunis ou à Sousse.
@@ -1168,8 +1168,8 @@ Afficher la liste des plats avec gluten et qui sont disponibles à Tunis ou à S
 </div>
 </div>
 
-<div id="outline-container-orgc0b6785" class="outline-3">
-<h3 id="orgc0b6785"><span class="section-number-3">3.22.</span> Question 22</h3>
+<div id="outline-container-org25e87a7" class="outline-3">
+<h3 id="org25e87a7"><span class="section-number-3">3.22.</span> Question 22</h3>
 <div class="outline-text-3" id="text-3-22">
 <p>
 Afficher les références des plats des commandes de la question 8.
@@ -1199,8 +1199,8 @@ Afficher les références des plats des commandes de la question 8.
 </div>
 </div>
 
-<div id="outline-container-org1c3d76a" class="outline-3">
-<h3 id="org1c3d76a"><span class="section-number-3">3.23.</span> Question 23</h3>
+<div id="outline-container-org98af211" class="outline-3">
+<h3 id="org98af211"><span class="section-number-3">3.23.</span> Question 23</h3>
 <div class="outline-text-3" id="text-3-23">
 <p>
 Calculer le prix moyen des plats du restaurant Chili's.
@@ -1212,8 +1212,8 @@ Calculer le prix moyen des plats du restaurant Chili's.
 </div>
 </div>
 
-<div id="outline-container-org6766a92" class="outline-3">
-<h3 id="org6766a92"><span class="section-number-3">3.24.</span> Question 24</h3>
+<div id="outline-container-org8e648a0" class="outline-3">
+<h3 id="org8e648a0"><span class="section-number-3">3.24.</span> Question 24</h3>
 <div class="outline-text-3" id="text-3-24">
 <p>
 Afficher le nom des restaurants qui offrent des plats à moins de 15 dinars.
@@ -1228,8 +1228,8 @@ Afficher le nom des restaurants qui offrent des plats à moins de 15 dinars.
 </div>
 </div>
 
-<div id="outline-container-org8b6b133" class="outline-3">
-<h3 id="org8b6b133"><span class="section-number-3">3.25.</span> Question 25</h3>
+<div id="outline-container-org05ae0d1" class="outline-3">
+<h3 id="org05ae0d1"><span class="section-number-3">3.25.</span> Question 25</h3>
 <div class="outline-text-3" id="text-3-25">
 <p>
 Calculer le prix du plat le plus cher des restaurants italiens.
@@ -1244,8 +1244,8 @@ Calculer le prix du plat le plus cher des restaurants italiens.
 </div>
 </div>
 
-<div id="outline-container-org539954a" class="outline-3">
-<h3 id="org539954a"><span class="section-number-3">3.26.</span> Question 26</h3>
+<div id="outline-container-org9f0f9ba" class="outline-3">
+<h3 id="org9f0f9ba"><span class="section-number-3">3.26.</span> Question 26</h3>
 <div class="outline-text-3" id="text-3-26">
 <p>
 Pour fidéliser les clients, Resto.tn offre un système de parrainage : un client peut parrainer
@@ -1253,8 +1253,8 @@ d'autres clients et bénéficier de réductions privilégiées.
 </p>
 </div>
 
-<div id="outline-container-org8dc8657" class="outline-4">
-<h4 id="org8dc8657"><span class="section-number-4">3.26.1.</span> a)</h4>
+<div id="outline-container-orgdd917c0" class="outline-4">
+<h4 id="orgdd917c0"><span class="section-number-4">3.26.1.</span> a)</h4>
 <div class="outline-text-4" id="text-3-26-1">
 <p>
 Ajouter la colonne <code>parrain</code> de type number à la table <code>Clients</code>.
@@ -1268,8 +1268,8 @@ Ajouter la colonne <code>parrain</code> de type number à la table <code>Clients
 </div>
 </div>
 
-<div id="outline-container-orgd5803c8" class="outline-4">
-<h4 id="orgd5803c8"><span class="section-number-4">3.26.2.</span> b)</h4>
+<div id="outline-container-org24fe6f2" class="outline-4">
+<h4 id="org24fe6f2"><span class="section-number-4">3.26.2.</span> b)</h4>
 <div class="outline-text-4" id="text-3-26-2">
 <p>
 Marie Dupont est la marraine des clients 2,3 et 4. Sarah Ayadi est la marraine
@@ -1284,8 +1284,8 @@ parrain=(<span style="color: #5317ac;">SELECT</span> idCli <span style="color: #
 </div>
 </div>
 
-<div id="outline-container-orge45b31e" class="outline-4">
-<h4 id="orge45b31e"><span class="section-number-4">3.26.3.</span> c)</h4>
+<div id="outline-container-orgd662152" class="outline-4">
+<h4 id="orgd662152"><span class="section-number-4">3.26.3.</span> c)</h4>
 <div class="outline-text-4" id="text-3-26-3">
 <p>
 Afficher pour chaque client, son nom et prénom ainsi que le nom et prénom de
@@ -1302,8 +1302,8 @@ son parrain (sa marraine).
 </div>
 </div>
 
-<div id="outline-container-org4149279" class="outline-3">
-<h3 id="org4149279"><span class="section-number-3">3.27.</span> Question 27</h3>
+<div id="outline-container-org9370379" class="outline-3">
+<h3 id="org9370379"><span class="section-number-3">3.27.</span> Question 27</h3>
 <div class="outline-text-3" id="text-3-27">
 <p>
 Afficher la liste des clients fidèles (qui se rendent uniquement) au restaurant <code>R1</code>.
@@ -1330,8 +1330,8 @@ MINUS
 </div>
 </div>
 
-<div id="outline-container-orga837df1" class="outline-3">
-<h3 id="orga837df1"><span class="section-number-3">3.28.</span> Question 29</h3>
+<div id="outline-container-org39c2035" class="outline-3">
+<h3 id="org39c2035"><span class="section-number-3">3.28.</span> Question 29</h3>
 <div class="outline-text-3" id="text-3-28">
 <p>
 Calculer le prix du plat le plus cher pour chaque spécialité, afficher pour cela le prix ainsi
@@ -1345,8 +1345,8 @@ que la spécialité. Ordonner le résultat par prix décroissant.
 </div>
 </div>
 
-<div id="outline-container-orge2d4f2d" class="outline-3">
-<h3 id="orge2d4f2d"><span class="section-number-3">3.29.</span> Question 30</h3>
+<div id="outline-container-org5c789a4" class="outline-3">
+<h3 id="org5c789a4"><span class="section-number-3">3.29.</span> Question 30</h3>
 <div class="outline-text-3" id="text-3-29">
 <p>
 Afficher le nombre de commandes effectuées par chaque client, en mentionnant son nom et
@@ -1362,8 +1362,8 @@ son prénom en plus du nombre de ses commandes.
 </div>
 </div>
 
-<div id="outline-container-orgb880976" class="outline-4">
-<h4 id="orgb880976"><span class="section-number-4">3.29.1.</span> a)</h4>
+<div id="outline-container-orga6485d7" class="outline-4">
+<h4 id="orga6485d7"><span class="section-number-4">3.29.1.</span> a)</h4>
 <div class="outline-text-4" id="text-3-29-1">
 <p>
 Affiner la requête pour n'afficher que les clients qui ont effectué plus d'une
@@ -1382,8 +1382,8 @@ commande.
 </div>
 </div>
 
-<div id="outline-container-orgd91f8cb" class="outline-3">
-<h3 id="orgd91f8cb"><span class="section-number-3">3.30.</span> Question 31</h3>
+<div id="outline-container-orge25aab4" class="outline-3">
+<h3 id="orge25aab4"><span class="section-number-3">3.30.</span> Question 31</h3>
 <div class="outline-text-3" id="text-3-30">
 <p>
 Afficher les clients qui ont effectué le plus de commandes (référez-vous à la question 26).
@@ -1402,8 +1402,8 @@ Afficher les clients qui ont effectué le plus de commandes (référez-vous à l
 </div>
 </div>
 
-<div id="outline-container-orgf858eea" class="outline-3">
-<h3 id="orgf858eea"><span class="section-number-3">3.31.</span> Question 33</h3>
+<div id="outline-container-org88ce2f1" class="outline-3">
+<h3 id="org88ce2f1"><span class="section-number-3">3.31.</span> Question 33</h3>
 <div class="outline-text-3" id="text-3-31">
 <p>
 Faites le nécessaire pour avoir l'affichage de l'extrait suivant relatif à toutes les commandes
@@ -1449,23 +1449,23 @@ de la base Resto.tn:
 </div>
 
 
-<div id="outline-container-org023b9a1" class="outline-2">
-<h2 id="org023b9a1"><span class="section-number-2">4.</span> TP HR</h2>
+<div id="outline-container-org9d5fe61" class="outline-2">
+<h2 id="org9d5fe61"><span class="section-number-2">4.</span> TP HR</h2>
 <div class="outline-text-2" id="text-4">
 
-<div id="orgefd66c9" class="figure">
+<div id="org3a5e338" class="figure">
 <p><img src="schema-b.png" alt="schema-b.png" />
 </p>
 <p><span class="figure-number">Figure 2: </span>HR schemas</p>
 </div>
 </div>
 
-<div id="outline-container-org416e9b1" class="outline-3">
-<h3 id="org416e9b1"><span class="section-number-3">4.1.</span> Partie 1</h3>
+<div id="outline-container-org07517b4" class="outline-3">
+<h3 id="org07517b4"><span class="section-number-3">4.1.</span> Partie 1</h3>
 <div class="outline-text-3" id="text-4-1">
 </div>
-<div id="outline-container-org0e0a56e" class="outline-4">
-<h4 id="org0e0a56e"><span class="section-number-4">4.1.1.</span> Question 1</h4>
+<div id="outline-container-org55e66cc" class="outline-4">
+<h4 id="org55e66cc"><span class="section-number-4">4.1.1.</span> Question 1</h4>
 <div class="outline-text-4" id="text-4-1-1">
 <p>
 Afficher la liste des employés qui n'ont pas de commission. Cette liste doit
@@ -1480,8 +1480,8 @@ Afficher la liste des employés qui n'ont pas de commission. Cette liste doit
 </div>
 </div>
 
-<div id="outline-container-orga7baa32" class="outline-4">
-<h4 id="orga7baa32"><span class="section-number-4">4.1.2.</span> Question 2</h4>
+<div id="outline-container-org5e981aa" class="outline-4">
+<h4 id="org5e981aa"><span class="section-number-4">4.1.2.</span> Question 2</h4>
 <div class="outline-text-4" id="text-4-1-2">
 <p>
 Afficher la liste des employés, leur nom, prénom et salaire. Cette liste doit
@@ -1499,8 +1499,8 @@ Afficher la liste des employés, leur nom, prénom et salaire. Cette liste doit
 </div>
 </div>
 
-<div id="outline-container-org1d8dcaa" class="outline-4">
-<h4 id="org1d8dcaa"><span class="section-number-4">4.1.3.</span> Question 3</h4>
+<div id="outline-container-org3df20a3" class="outline-4">
+<h4 id="org3df20a3"><span class="section-number-4">4.1.3.</span> Question 3</h4>
 <div class="outline-text-4" id="text-4-1-3">
 <p>
 Afficher le résultat suivant:
@@ -1563,8 +1563,8 @@ Afficher le résultat suivant:
 </div>
 </div>
 
-<div id="outline-container-org196b1fc" class="outline-4">
-<h4 id="org196b1fc"><span class="section-number-4">4.1.4.</span> Question 4</h4>
+<div id="outline-container-orgb437ce9" class="outline-4">
+<h4 id="orgb437ce9"><span class="section-number-4">4.1.4.</span> Question 4</h4>
 <div class="outline-text-4" id="text-4-1-4">
 <p>
 Afficher la liste des départements comme suit:
@@ -1631,8 +1631,8 @@ Afficher la liste des départements comme suit:
 </div>
 </div>
 
-<div id="outline-container-orgaa3f3cd" class="outline-4">
-<h4 id="orgaa3f3cd"><span class="section-number-4">4.1.5.</span> Question 5</h4>
+<div id="outline-container-orgf220421" class="outline-4">
+<h4 id="orgf220421"><span class="section-number-4">4.1.5.</span> Question 5</h4>
 <div class="outline-text-4" id="text-4-1-5">
 <p>
 Afficher les noms des employés et un statut d'évaluation tel que si
@@ -1653,8 +1653,8 @@ REVIEW.
 </div>
 </div>
 
-<div id="outline-container-orgcedb1ba" class="outline-4">
-<h4 id="orgcedb1ba"><span class="section-number-4">4.1.6.</span> Question 6</h4>
+<div id="outline-container-org1f488b3" class="outline-4">
+<h4 id="org1f488b3"><span class="section-number-4">4.1.6.</span> Question 6</h4>
 <div class="outline-text-4" id="text-4-1-6">
 <p>
 Afficher la liste des employés, l’année, le mois en lettre et le numéro du trimestre de
@@ -1673,8 +1673,8 @@ leur date d’embauche par ordre décroissant de l’année.
 </div>
 </div>
 
-<div id="outline-container-org3ce682a" class="outline-4">
-<h4 id="org3ce682a"><span class="section-number-4">4.1.7.</span> Question 7</h4>
+<div id="outline-container-org8b31b9c" class="outline-4">
+<h4 id="org8b31b9c"><span class="section-number-4">4.1.7.</span> Question 7</h4>
 <div class="outline-text-4" id="text-4-1-7">
 <p>
 Afficher pour chacun des employés du département 30 son ancienneté (nombre total
@@ -1692,12 +1692,12 @@ de mois travaillés).
 </div>
 </div>
 
-<div id="outline-container-orgcb1507f" class="outline-3">
-<h3 id="orgcb1507f"><span class="section-number-3">4.2.</span> Partie 2</h3>
+<div id="outline-container-org1355a67" class="outline-3">
+<h3 id="org1355a67"><span class="section-number-3">4.2.</span> Partie 2</h3>
 <div class="outline-text-3" id="text-4-2">
 </div>
-<div id="outline-container-org8acb0ef" class="outline-4">
-<h4 id="org8acb0ef"><span class="section-number-4">4.2.1.</span> Question 1</h4>
+<div id="outline-container-orgcd636fb" class="outline-4">
+<h4 id="orgcd636fb"><span class="section-number-4">4.2.1.</span> Question 1</h4>
 <div class="outline-text-4" id="text-4-2-1">
 <p>
 Afficher le salaire maximum et minimum à partir de la table <code>EMPLOYEES</code>.
@@ -1710,8 +1710,8 @@ Afficher le salaire maximum et minimum à partir de la table <code>EMPLOYEES</co
 </div>
 </div>
 
-<div id="outline-container-org065a1b2" class="outline-4">
-<h4 id="org065a1b2"><span class="section-number-4">4.2.2.</span> Question 2</h4>
+<div id="outline-container-org7523f62" class="outline-4">
+<h4 id="org7523f62"><span class="section-number-4">4.2.2.</span> Question 2</h4>
 <div class="outline-text-4" id="text-4-2-2">
 <p>
 Afficher le salaire moyen par département en arrondissant la valeur à 2 chiffres après
@@ -1728,8 +1728,8 @@ la virgule. Afficher aussi l’identifiant du département.
 </div>
 </div>
 
-<div id="outline-container-org2a9af88" class="outline-4">
-<h4 id="org2a9af88"><span class="section-number-4">4.2.3.</span> Question 3</h4>
+<div id="outline-container-org2ff459c" class="outline-4">
+<h4 id="org2ff459c"><span class="section-number-4">4.2.3.</span> Question 3</h4>
 <div class="outline-text-4" id="text-4-2-3">
 <p>
 Afficher pour chaque département le nombre des employés qui lui
@@ -1794,8 +1794,8 @@ sontaffectés. Le résultat doit s’afficher de cette manière:
 </div>
 </div>
 
-<div id="outline-container-org3927218" class="outline-4">
-<h4 id="org3927218"><span class="section-number-4">4.2.4.</span> Question 4</h4>
+<div id="outline-container-org24e9ed8" class="outline-4">
+<h4 id="org24e9ed8"><span class="section-number-4">4.2.4.</span> Question 4</h4>
 <div class="outline-text-4" id="text-4-2-4">
 <p>
 Modifier la requête précédente pour avoir ces deux résultats:
@@ -1861,12 +1861,12 @@ Modifier la requête précédente pour avoir ces deux résultats:
 </div>
 </div>
 
-<div id="outline-container-org36ec03a" class="outline-3">
-<h3 id="org36ec03a"><span class="section-number-3">4.3.</span> Partie 3</h3>
+<div id="outline-container-orged1cb9e" class="outline-3">
+<h3 id="orged1cb9e"><span class="section-number-3">4.3.</span> Partie 3</h3>
 <div class="outline-text-3" id="text-4-3">
 </div>
-<div id="outline-container-org1208438" class="outline-4">
-<h4 id="org1208438"><span class="section-number-4">4.3.1.</span> Question 1</h4>
+<div id="outline-container-org1efb46f" class="outline-4">
+<h4 id="org1efb46f"><span class="section-number-4">4.3.1.</span> Question 1</h4>
 <div class="outline-text-4" id="text-4-3-1">
 <p>
 Afficher les noms et prénoms des employés et respectivement le nom du département
@@ -1882,8 +1882,8 @@ auquel ils sont affectés.
 </div>
 </div>
 
-<div id="outline-container-org8d53099" class="outline-4">
-<h4 id="org8d53099"><span class="section-number-4">4.3.2.</span> Question 2</h4>
+<div id="outline-container-org17aee28" class="outline-4">
+<h4 id="org17aee28"><span class="section-number-4">4.3.2.</span> Question 2</h4>
 <div class="outline-text-4" id="text-4-3-2">
 <p>
 Afficher les colonnes suivantes:
@@ -1911,8 +1911,8 @@ Le résultat doit être trié par nom de département.
 </div>
 </div>
 
-<div id="outline-container-org143c19b" class="outline-4">
-<h4 id="org143c19b"><span class="section-number-4">4.3.3.</span> Question 3</h4>
+<div id="outline-container-org951d241" class="outline-4">
+<h4 id="org951d241"><span class="section-number-4">4.3.3.</span> Question 3</h4>
 <div class="outline-text-4" id="text-4-3-3">
 <p>
 Afficher la liste des employés et respectivement le nom de leur <code>JOB_TITLE</code>.
@@ -1927,8 +1927,8 @@ Afficher la liste des employés et respectivement le nom de leur <code>JOB_TITLE
 </div>
 </div>
 
-<div id="outline-container-org6393527" class="outline-4">
-<h4 id="org6393527"><span class="section-number-4">4.3.4.</span> Question 4</h4>
+<div id="outline-container-org1d9fda2" class="outline-4">
+<h4 id="org1d9fda2"><span class="section-number-4">4.3.4.</span> Question 4</h4>
 <div class="outline-text-4" id="text-4-3-4">
 <p>
 Afficher la somme du nombre de mois travaillés par tous les employés
@@ -1946,8 +1946,8 @@ chiffres après la virgule. Afficher le nom du département.
 </div>
 </div>
 
-<div id="outline-container-orgbbcaa38" class="outline-4">
-<h4 id="orgbbcaa38"><span class="section-number-4">4.3.5.</span> Question 5</h4>
+<div id="outline-container-org6bb8537" class="outline-4">
+<h4 id="org6bb8537"><span class="section-number-4">4.3.5.</span> Question 5</h4>
 <div class="outline-text-4" id="text-4-3-5">
 <p>
 Afficher pour chaque employé, son nom et prénom, et respectivement le
@@ -1964,12 +1964,12 @@ nom et prénom de son manager.
 </div>
 </div>
 
-<div id="outline-container-org6a42eff" class="outline-3">
-<h3 id="org6a42eff"><span class="section-number-3">4.4.</span> Partie 4</h3>
+<div id="outline-container-orgfc90ddf" class="outline-3">
+<h3 id="orgfc90ddf"><span class="section-number-3">4.4.</span> Partie 4</h3>
 <div class="outline-text-3" id="text-4-4">
 </div>
-<div id="outline-container-org930c734" class="outline-4">
-<h4 id="org930c734"><span class="section-number-4">4.4.1.</span> Question 1</h4>
+<div id="outline-container-org249dc09" class="outline-4">
+<h4 id="org249dc09"><span class="section-number-4">4.4.1.</span> Question 1</h4>
 <div class="outline-text-4" id="text-4-4-1">
 <p>
 Afficher la liste des départements auxquels aucun employé n'est affecté.
@@ -1986,8 +1986,8 @@ Afficher la liste des départements auxquels aucun employé n'est affecté.
 </div>
 </div>
 
-<div id="outline-container-org8116229" class="outline-4">
-<h4 id="org8116229"><span class="section-number-4">4.4.2.</span> Question 2</h4>
+<div id="outline-container-org5de156d" class="outline-4">
+<h4 id="org5de156d"><span class="section-number-4">4.4.2.</span> Question 2</h4>
 <div class="outline-text-4" id="text-4-4-2">
 <p>
 Afficher les détails des employés dont le salaire est égal au salaire minimum.
@@ -2001,8 +2001,8 @@ Afficher les détails des employés dont le salaire est égal au salaire minimum
 </div>
 </div>
 
-<div id="outline-container-orgdfed924" class="outline-4">
-<h4 id="orgdfed924"><span class="section-number-4">4.4.3.</span> Question 3</h4>
+<div id="outline-container-orgf60dd17" class="outline-4">
+<h4 id="orgf60dd17"><span class="section-number-4">4.4.3.</span> Question 3</h4>
 <div class="outline-text-4" id="text-4-4-3">
 <p>
 Afficher les détails relatifs aux employés qui ont le même manager que l'employé dont
@@ -2017,14 +2017,14 @@ l'identifiant est égal à 110.
 </div>
 </div>
 
-<div id="outline-container-orga569548" class="outline-4">
-<h4 id="orga569548"><span class="section-number-4">4.4.4.</span> Question 4</h4>
+<div id="outline-container-org1a0da28" class="outline-4">
+<h4 id="org1a0da28"><span class="section-number-4">4.4.4.</span> Question 4</h4>
 <div class="outline-text-4" id="text-4-4-4">
 <p>
 Afficher le résultat suivant&#x2026;
 </p>
 <div class="org-src-container">
-<pre class="src src-sql" id="org7a0514e"><span style="color: #505050;">/* This is the closest thing I have gotten to the answer :-( */</span>
+<pre class="src src-sql" id="org3a6b357"><span style="color: #505050;">/* This is the closest thing I have gotten to the answer :-( */</span>
 <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">COUNT</span>(REGION_ID) <span style="color: #5317ac;">AS</span> "Liste", <span style="color: #8f0075;">COALESCE</span>(REGION_NAME, <span style="color: #2544bb;">'TOTAL'</span>) <span style="color: #5317ac;">AS</span> "Region"
 <span style="color: #5317ac;">FROM</span> REGIONS
 <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> <span style="color: #5317ac;">ROLLUP</span> (REGION_NAME);
@@ -2033,8 +2033,8 @@ Afficher le résultat suivant&#x2026;
 </div>
 </div>
 
-<div id="outline-container-org124605b" class="outline-4">
-<h4 id="org124605b"><span class="section-number-4">4.4.5.</span> Question 5</h4>
+<div id="outline-container-org6269749" class="outline-4">
+<h4 id="org6269749"><span class="section-number-4">4.4.5.</span> Question 5</h4>
 <div class="outline-text-4" id="text-4-4-5">
 <p>
 Afficher la liste des employés et respectivement le nom de leur JOB. (En utilisant une
@@ -2050,8 +2050,8 @@ sous requête)
 </div>
 </div>
 
-<div id="outline-container-org3d40f39" class="outline-4">
-<h4 id="org3d40f39"><span class="section-number-4">4.4.6.</span> Question 6</h4>
+<div id="outline-container-org18f3945" class="outline-4">
+<h4 id="org18f3945"><span class="section-number-4">4.4.6.</span> Question 6</h4>
 <div class="outline-text-4" id="text-4-4-6">
 <p>
 Afficher les employés qui touche un salaire supérieur à celui de tous les directeurs
@@ -2070,8 +2070,8 @@ commerciaux (<code>JOB_ID='SA_MAN'</code>)
 </div>
 </div>
 
-<div id="outline-container-orgcd96136" class="outline-4">
-<h4 id="orgcd96136"><span class="section-number-4">4.4.7.</span> Question 7</h4>
+<div id="outline-container-orge79f194" class="outline-4">
+<h4 id="orge79f194"><span class="section-number-4">4.4.7.</span> Question 7</h4>
 <div class="outline-text-4" id="text-4-4-7">
 <p>
 Afficher la liste des employés qui gagnent moins que le salaire moyen de leur
@@ -2090,16 +2090,16 @@ département.
 </div>
 </div>
 
-<div id="outline-container-orgff87a70" class="outline-2">
-<h2 id="orgff87a70"><span class="section-number-2">5.</span> PL/SQL</h2>
+<div id="outline-container-orga35ea63" class="outline-2">
+<h2 id="orga35ea63"><span class="section-number-2">5.</span> PL/SQL</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-orgccea3b5" class="outline-3">
-<h3 id="orgccea3b5"><span class="section-number-3">5.1.</span> Blocs Anonymes</h3>
+<div id="outline-container-orgf73b8d5" class="outline-3">
+<h3 id="orgf73b8d5"><span class="section-number-3">5.1.</span> Blocs Anonymes</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
-<div id="outline-container-org1137013" class="outline-4">
-<h4 id="org1137013"><span class="section-number-4">5.1.1.</span> Question 1</h4>
+<div id="outline-container-org8a74505" class="outline-4">
+<h4 id="org8a74505"><span class="section-number-4">5.1.1.</span> Question 1</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <p>
 Calculer et afficher la moyenne des salaires des employés qui travaillent dans les
@@ -2122,8 +2122,8 @@ départements 20 et 30.
 </div>
 </div>
 
-<div id="outline-container-orge0244e9" class="outline-4">
-<h4 id="orge0244e9"><span class="section-number-4">5.1.2.</span> Question 2</h4>
+<div id="outline-container-orga8613e3" class="outline-4">
+<h4 id="orga8613e3"><span class="section-number-4">5.1.2.</span> Question 2</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <p>
 Afficher les détails du manager de l'employé 101.
@@ -2147,8 +2147,8 @@ Afficher les détails du manager de l'employé 101.
 </div>
 </div>
 
-<div id="outline-container-org8140cd9" class="outline-4">
-<h4 id="org8140cd9"><span class="section-number-4">5.1.3.</span> Question 3</h4>
+<div id="outline-container-orgd40bffd" class="outline-4">
+<h4 id="orgd40bffd"><span class="section-number-4">5.1.3.</span> Question 3</h4>
 <div class="outline-text-4" id="text-5-1-3">
 <p>
 Echanger les salaires des employés 120 et 122.
@@ -2172,8 +2172,8 @@ Echanger les salaires des employés 120 et 122.
 </div>
 </div>
 
-<div id="outline-container-org2890841" class="outline-4">
-<h4 id="org2890841"><span class="section-number-4">5.1.4.</span> Question 4</h4>
+<div id="outline-container-org1aba70d" class="outline-4">
+<h4 id="org1aba70d"><span class="section-number-4">5.1.4.</span> Question 4</h4>
 <div class="outline-text-4" id="text-5-1-4">
 <p>
 Augmenter le salaire de l'employé 115 sur la base des conditions suivantes:
@@ -2208,8 +2208,8 @@ Augmenter le salaire de l'employé 115 sur la base des conditions suivantes:
 </div>
 </div>
 
-<div id="outline-container-org8e9368a" class="outline-4">
-<h4 id="org8e9368a"><span class="section-number-4">5.1.5.</span> Question 5</h4>
+<div id="outline-container-org41212f0" class="outline-4">
+<h4 id="org41212f0"><span class="section-number-4">5.1.5.</span> Question 5</h4>
 <div class="outline-text-4" id="text-5-1-5">
 <p>
 Changer le pourcentage de commission comme suit pour l'employé avec l'ID égale à
@@ -2255,8 +2255,8 @@ Changer le pourcentage de commission comme suit pour l'employé avec l'ID égale
 </div>
 
 
-<div id="outline-container-orgc39c55c" class="outline-3">
-<h3 id="orgc39c55c"><span class="section-number-3">5.2.</span> TP 1</h3>
+<div id="outline-container-org540cf0e" class="outline-3">
+<h3 id="org540cf0e"><span class="section-number-3">5.2.</span> TP 1</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 Gardez à l'esprit les notations suivantes lors de la lecture de cette section:
@@ -2267,8 +2267,8 @@ Gardez à l'esprit les notations suivantes lors de la lecture de cette section:
 </ul>
 </div>
 
-<div id="outline-container-org97689f1" class="outline-4">
-<h4 id="org97689f1"><span class="section-number-4">5.2.1.</span> Question 1</h4>
+<div id="outline-container-org5a51d90" class="outline-4">
+<h4 id="org5a51d90"><span class="section-number-4">5.2.1.</span> Question 1</h4>
 <div class="outline-text-4" id="text-5-2-1">
 <p>
 Afficher pour chaque département:
@@ -2309,8 +2309,8 @@ Afficher pour chaque département:
 </div>
 </div>
 
-<div id="outline-container-orgfe2400d" class="outline-4">
-<h4 id="orgfe2400d"><span class="section-number-4">5.2.2.</span> Question 2</h4>
+<div id="outline-container-org6ba4b2a" class="outline-4">
+<h4 id="org6ba4b2a"><span class="section-number-4">5.2.2.</span> Question 2</h4>
 <div class="outline-text-4" id="text-5-2-2">
 <p>
 Afficher les 6 premiers employés ayant les salaires les plus
@@ -2340,8 +2340,8 @@ premier employé est celui ayant le salaire le plus élevé.
 </div>
 </div>
 
-<div id="outline-container-orgaf45b4c" class="outline-4">
-<h4 id="orgaf45b4c"><span class="section-number-4">5.2.3.</span> Question 3</h4>
+<div id="outline-container-orgd249085" class="outline-4">
+<h4 id="orgd249085"><span class="section-number-4">5.2.3.</span> Question 3</h4>
 <div class="outline-text-4" id="text-5-2-3">
 <p>
 Afficher le cinquième et dixième employé de la table <code>EMPLOYEES</code>.
@@ -2398,8 +2398,8 @@ nom.
 </div>
 </div>
 
-<div id="outline-container-org4a7fce2" class="outline-4">
-<h4 id="org4a7fce2"><span class="section-number-4">5.2.4.</span> Question 5</h4>
+<div id="outline-container-orgc240f42" class="outline-4">
+<h4 id="orgc240f42"><span class="section-number-4">5.2.4.</span> Question 5</h4>
 <div class="outline-text-4" id="text-5-2-4">
 <p>
 Ecrivez un bloc PL/SQL qui déclare et utilise des curseurs avec des paramètres. Dans
@@ -2449,8 +2449,8 @@ la valeur <code>EMPLOYEE_ID</code> est inférieure à 120.
 </div>
 </div>
 
-<div id="outline-container-org3fc3832" class="outline-4">
-<h4 id="org3fc3832"><span class="section-number-4">5.2.5.</span> Question 6</h4>
+<div id="outline-container-org57cdca2" class="outline-4">
+<h4 id="org57cdca2"><span class="section-number-4">5.2.5.</span> Question 6</h4>
 <div class="outline-text-4" id="text-5-2-5">
 <p>
 Afficher l'année où un nombre maximal d'employés a été embauché en précisant le
@@ -2493,13 +2493,13 @@ nombre de personnes embauchées chaque mois de cette année.
 </div>
 
 
-<div id="outline-container-org387694b" class="outline-3">
-<h3 id="org387694b"><span class="section-number-3">5.3.</span> TP 2</h3>
+<div id="outline-container-org3248435" class="outline-3">
+<h3 id="org3248435"><span class="section-number-3">5.3.</span> TP 2</h3>
 <div class="outline-text-3" id="text-5-3">
 </div>
 
-<div id="outline-container-orgf24c674" class="outline-4">
-<h4 id="orgf24c674"><span class="section-number-4">5.3.1.</span> Question 1</h4>
+<div id="outline-container-orgfcee746" class="outline-4">
+<h4 id="orgfcee746"><span class="section-number-4">5.3.1.</span> Question 1</h4>
 <div class="outline-text-4" id="text-5-3-1">
 <p>
 Ecrire une fonction stockée <code>FN_NBREDEPARTEMENT</code> permettant de retourner le
@@ -2521,8 +2521,8 @@ nombre total des départements.
 </div>
 </div>
 
-<div id="outline-container-org2e0491c" class="outline-4">
-<h4 id="org2e0491c"><span class="section-number-4">5.3.2.</span> Question 2</h4>
+<div id="outline-container-org55a378f" class="outline-4">
+<h4 id="org55a378f"><span class="section-number-4">5.3.2.</span> Question 2</h4>
 <div class="outline-text-4" id="text-5-3-2">
 <p>
 Ecrire une fonction stockée <code>FN_NOMDEPT</code> qui prend en paramètre l'id de
@@ -2549,8 +2549,8 @@ l'employé et qui retourne le nom du département auquel il est associé.
 </div>
 </div>
 
-<div id="outline-container-org2366ffc" class="outline-4">
-<h4 id="org2366ffc"><span class="section-number-4">5.3.3.</span> Question 3</h4>
+<div id="outline-container-orgfb19b45" class="outline-4">
+<h4 id="orgfb19b45"><span class="section-number-4">5.3.3.</span> Question 3</h4>
 <div class="outline-text-4" id="text-5-3-3">
 <p>
 Ecrire une fonction stockée <code>FN_SALAIRE</code> qui retourne le salaire d'un employé
@@ -2575,8 +2575,8 @@ dont l'identifiant est donné en paramètre d'entrée.
 </div>
 </div>
 
-<div id="outline-container-orgc9c7ac1" class="outline-4">
-<h4 id="orgc9c7ac1"><span class="section-number-4">5.3.4.</span> Question 4</h4>
+<div id="outline-container-orgc34009e" class="outline-4">
+<h4 id="orgc34009e"><span class="section-number-4">5.3.4.</span> Question 4</h4>
 <div class="outline-text-4" id="text-5-3-4">
 <p>
 Ecrire une fonction stockée <code>FN_NBR_SALARIE</code> qui prend en paramètre le numéro
@@ -2620,8 +2620,8 @@ Traduire cette fonction en une procédure stockée <code>PROC_NBR_SALARIE</code>
 </div>
 </div>
 
-<div id="outline-container-orge552889" class="outline-4">
-<h4 id="orge552889"><span class="section-number-4">5.3.5.</span> Question 5</h4>
+<div id="outline-container-org3b90bef" class="outline-4">
+<h4 id="org3b90bef"><span class="section-number-4">5.3.5.</span> Question 5</h4>
 <div class="outline-text-4" id="text-5-3-5">
 <p>
 Ecrire une procédure stockée <code>PROC_TEST_NBR_SALARIE</code> qui permet d'afficher les
@@ -2648,8 +2648,8 @@ noms des départements dont le nombre des salariés est supérieur à 40.
 </div>
 </div>
 
-<div id="outline-container-orgabfe95c" class="outline-4">
-<h4 id="orgabfe95c"><span class="section-number-4">5.3.6.</span> Question 6</h4>
+<div id="outline-container-org7936c93" class="outline-4">
+<h4 id="org7936c93"><span class="section-number-4">5.3.6.</span> Question 6</h4>
 <div class="outline-text-4" id="text-5-3-6">
 <p>
 Ecrire une procédure stockée <code>PROC_ANNEE_DEMBAUCHE</code> permettant d'afficher
@@ -2675,8 +2675,8 @@ les années au cours desquelles plus de 10 salariés ont été embauché.
 </div>
 </div>
 
-<div id="outline-container-org18fdcd9" class="outline-4">
-<h4 id="org18fdcd9"><span class="section-number-4">5.3.7.</span> Question 7</h4>
+<div id="outline-container-org8c901cb" class="outline-4">
+<h4 id="org8c901cb"><span class="section-number-4">5.3.7.</span> Question 7</h4>
 <div class="outline-text-4" id="text-5-3-7">
 <p>
 Ecrire une procédure stockée <code>PROC_JOBHISTORY</code> permettant d'afficher
@@ -2706,8 +2706,8 @@ la liste des employés qui ont changé de poste au minimum une fois.
 </div>
 </div>
 
-<div id="outline-container-orgc1dee97" class="outline-4">
-<h4 id="orgc1dee97"><span class="section-number-4">5.3.8.</span> Question 8</h4>
+<div id="outline-container-org26a0be8" class="outline-4">
+<h4 id="org26a0be8"><span class="section-number-4">5.3.8.</span> Question 8</h4>
 <div class="outline-text-4" id="text-5-3-8">
 <p>
 Ecrire une procédure stockée <code>PROC_LISTE_DES_EMP</code> permettant
@@ -2732,8 +2732,8 @@ d'afficher la liste de tous employés.
 </div>
 </div>
 
-<div id="outline-container-orgac9729b" class="outline-4">
-<h4 id="orgac9729b"><span class="section-number-4">5.3.9.</span> Question 9</h4>
+<div id="outline-container-org28240fe" class="outline-4">
+<h4 id="org28240fe"><span class="section-number-4">5.3.9.</span> Question 9</h4>
 <div class="outline-text-4" id="text-5-3-9">
 <p>
 Ecrire une procédure stockée <code>PROC_LISTE_EMP_DEPT</code> permettant d'afficher pour
@@ -2767,8 +2767,8 @@ prénom.
 </div>
 </div>
 
-<div id="outline-container-org14cbc54" class="outline-4">
-<h4 id="org14cbc54"><span class="section-number-4">5.3.10.</span> Question 10</h4>
+<div id="outline-container-org1d776a6" class="outline-4">
+<h4 id="org1d776a6"><span class="section-number-4">5.3.10.</span> Question 10</h4>
 <div class="outline-text-4" id="text-5-3-10">
 <p>
 Ecrire une procédure stockée <code>PROC_LISTE_EMP</code> permettant d'afficher la
@@ -2796,8 +2796,8 @@ salaires.
 </div>
 </div>
 
-<div id="outline-container-org7f1a91b" class="outline-4">
-<h4 id="org7f1a91b"><span class="section-number-4">5.3.11.</span> Question 11</h4>
+<div id="outline-container-org0855919" class="outline-4">
+<h4 id="org0855919"><span class="section-number-4">5.3.11.</span> Question 11</h4>
 <div class="outline-text-4" id="text-5-3-11">
 <p>
 Ecrire une fonction stockée <code>FN_MOY_SALAIRE</code> qui retourne le salaire
@@ -2830,8 +2830,8 @@ est donné comme paramètre d'entrée.
 </div>
 </div>
 
-<div id="outline-container-org751c0c0" class="outline-4">
-<h4 id="org751c0c0"><span class="section-number-4">5.3.12.</span> Question 12</h4>
+<div id="outline-container-orgf85b545" class="outline-4">
+<h4 id="orgf85b545"><span class="section-number-4">5.3.12.</span> Question 12</h4>
 <div class="outline-text-4" id="text-5-3-12">
 <p>
 Ecrire une procédure stockée <code>PROC_SAL_SUP</code> qui permet d'afficher la

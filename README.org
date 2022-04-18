@@ -1,6 +1,6 @@
 * grtcdr's DBMS course notes
 
-Hey 3^rd year students!
+Hey there, third year students!
 
 This repository houses my personal (work in progress) notes for the
 Database Management Systems class, [[file:dbms.org][have a read.]]

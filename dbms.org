@@ -144,9 +144,6 @@ insert into joueurs values(
 select seq_joueurs.currval from joueurs;
 #+END_SRC
 
------
-
-
 * TP1: Langage de Définition des Données (LDD)
 
 #+CAPTION: LDD Schemas
@@ -400,8 +397,6 @@ ON plats(freeGluten);
 *** Cet index peut-il être unique?
 
 Non, parcequ'il n'y a aucune garantie que la valeur de la colonne freeGluten va etre unique pour tout les plats.
-
------
 
 
 * TP3: Langage d'Interrogation des Données (LID)
@@ -725,8 +720,6 @@ ON P.ref_P = LC.ref_P
 WHERE P.idR = 'R1';
 #+END_SRC
 
-** TODO Solve question 28
-
 ** Question 29
 
 Calculer le prix du plat le plus cher pour chaque spécialité, afficher pour cela le prix ainsi
@@ -775,8 +768,6 @@ HAVING COUNT(c.idc) = ( SELECT MAX(COUNT(c.idc))
                         GROUP BY c.idc );
 #+END_SRC
 
-** TODO Solve question 32
-
 ** Question 33
 
 Faites le nécessaire pour avoir l'affichage de l'extrait suivant relatif à toutes les commandes
@@ -795,8 +786,6 @@ ON cli.idCli = com.idCli
 INNER JOIN Livreurs liv
 ON liv.idL = com.idL;
 #+END_SRC
-
------
 
 
 * TP HR
@@ -1100,9 +1089,9 @@ Afficher le résultat suivant...
 Afficher la liste des employés et respectivement le nom de leur JOB. (En utilisant une
 sous requête)
 #+begin_src sql :tangle yes :comments org
-  SELECT E.*, ( SELECT J.JOB_TITLE
-		FROM JOBS J
-		WHERE J.JOB_ID = E.JOB_ID )
+  SELECT E.*, (SELECT J.JOB_TITLE
+               FROM JOBS J
+               WHERE J.JOB_ID = E.JOB_ID)
   FROM EMPLOYEES E;
 #+end_src
 
@@ -1113,11 +1102,11 @@ commerciaux (~JOB_ID='SA_MAN'~)
 #+begin_src sql :tangle yes :comments org
   SELECT *
   FROM EMPLOYEES E
-  WHERE SALARY > ( SELECT MAX(SALARY)
-		   FROM EMPLOYEES E
-		   INNER JOIN JOBS J
-		   ON J.JOB_ID = E.JOB_ID
-		   WHERE J.JOB_ID = 'SA_MAN' );
+  WHERE SALARY > (SELECT MAX(SALARY)
+                  FROM EMPLOYEES E
+                  INNER JOIN JOBS J
+                  ON J.JOB_ID = E.JOB_ID
+                  WHERE J.JOB_ID = 'SA_MAN');
 #+end_src
 
 *** Question 7
@@ -1131,9 +1120,6 @@ département.
 		   FROM EMPLOYEES X
 		   WHERE E.DEPARTMENT_ID = X.DEPARTMENT_ID );
 #+end_src
-
------
-
 
 * PL/SQL
 
@@ -1167,8 +1153,8 @@ Afficher les détails du manager de l'employé 101.
     INTO MANAGER
     FROM EMPLOYEES 
     WHERE EMPLOYEE_ID = (SELECT MANAGER_ID 
-		   FROM EMPLOYEES 
-		   WHERE EMPLOYEE_ID = 101);
+                         FROM EMPLOYEES 
+                         WHERE EMPLOYEE_ID = 101);
 
     DBMS_OUTPUT.PUT_LINE(MANAGER.FIRST_NAME || ' ' || MANAGER.LAST_NAME);
   END;
@@ -1349,8 +1335,6 @@ Afficher le cinquième et dixième employé de la table =EMPLOYEES=.
   END;
   /
 #+end_src
-
-*** TODO Question 4
 
 Afficher un état de tous les pays et les villes correspondantes pour tous les
 départements. Pour ce faire utiliser les tables =COUNTRIES= et =LOCATIONS=.

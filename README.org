@@ -1,0 +1,15 @@
+* grtcdr's DBMS course notes
+
+Hey 3^rd year students!
+
+This repository houses my personal (work in progress) notes for the
+Database Management Systems class, [[file:dbms.org][have a read.]]
+
+* Contributing
+If you notice any issues or typos, please [file an
+issue](https://github.com/grtcdr/ESPRIT-DBMS-Y3/issues), or [submit a
+PR](https://github.com/Macchina-CLI/macchina/pulls) directly if you're
+familiar with [[https://orgmode.org/][Org Mode]], which these notes are written in.
+
+* Copying
+Source code is licensed under the MIT license.

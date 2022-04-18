@@ -1,5 +1,6 @@
 #+TITLE: grtcdr's DBMS course notes
 #+OPTIONS: html-postamble:t toc:1
+#+EXPORT_FILE_NAME: export/dbms
 
 * Introduction
 

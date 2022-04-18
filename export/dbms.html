@@ -1,0 +1,2876 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2022-04-18 Mon 10:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>grtcdr's DBMS course notes</title>
+<meta name="author" content="Aziz Ben Ali" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">grtcdr's DBMS course notes</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgb0ee39f">1. Introduction</a></li>
+<li><a href="#orge684d6b">2. TP1: Langage de Définition des Données (LDD)</a></li>
+<li><a href="#org077b5fe">3. TP3: Langage d'Interrogation des Données (LID)</a></li>
+<li><a href="#org023b9a1">4. TP HR</a></li>
+<li><a href="#orgff87a70">5. PL/SQL</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb0ee39f" class="outline-2">
+<h2 id="orgb0ee39f"><span class="section-number-2">1.</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org9fd2b19" class="outline-4">
+<h4 id="org9fd2b19"><span class="section-number-4">1.0.1.</span> Créer des tables</h4>
+<div class="outline-text-4" id="text-1-0-1">
+<p>
+Dans l'exemple suivant, les contraintes seront définies sur la même
+ligne que les définitions de colonne.
+</p>
+
+<p>
+Le mot clé <code>CONSTRAINT</code> peut être omis.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> (
+    ID_JOUEUR <span style="color: #5317ac;">NUMBER</span> <span style="color: #5317ac;">CONSTRAINT</span> pk_joueur <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span>,
+    NOM <span style="color: #005a5f;">VARCHAR</span>(30) <span style="color: #5317ac;">NOT</span> <span style="color: #5317ac;">NULL</span>,
+    PRENOM <span style="color: #005a5f;">VARCHAR</span>(30) <span style="color: #5317ac;">NOT</span> <span style="color: #5317ac;">NULL</span>,
+    DATE_NAISSANCE <span style="color: #005a5f;">DATE</span>,
+    NUMERO <span style="color: #5317ac;">NUMBER</span> <span style="color: #5317ac;">UNIQUE</span>,
+    SALAIRE <span style="color: #5317ac;">NUMBER</span> <span style="color: #5317ac;">CONSTRAINT</span> ck_salaire <span style="color: #5317ac;">CHECK</span> (SALAIRE &gt; 0),
+);
+</pre>
+</div>
+
+<p>
+Pour garder nos définitions de colonne bien rangées, nous pouvons
+définir nos contraintes à la fin de la requête.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> (
+    ID_JOUEUR <span style="color: #5317ac;">NUMBER</span>,
+    NOM <span style="color: #005a5f;">VARCHAR</span>(30) <span style="color: #5317ac;">NOT</span> <span style="color: #5317ac;">NULL</span>,
+    PRENOM <span style="color: #005a5f;">VARCHAR</span>(30) <span style="color: #5317ac;">NOT</span> <span style="color: #5317ac;">NULL</span>,
+    DATE_NAISSANCE <span style="color: #005a5f;">DATE</span>,
+    NUMERO <span style="color: #5317ac;">NUMBER</span> <span style="color: #5317ac;">UNIQUE</span>,
+    SALAIRE <span style="color: #5317ac;">NUMBER</span>,
+
+    <span style="color: #5317ac;">CONSTRAINT</span> ck_salaire <span style="color: #5317ac;">CHECK</span> (SALAIRE &gt; 0),
+    <span style="color: #5317ac;">CONSTRAINT</span> pk_joueur <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span>,
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e7ceb4" class="outline-4">
+<h4 id="org8e7ceb4"><span class="section-number-4">1.0.2.</span> Afficher la structure des tables</h4>
+<div class="outline-text-4" id="text-1-0-2">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DESCRIBE</span> joueurs;
+</pre>
+</div>
+
+<p>
+C'est trop verbeux!
+</p>
+
+<p>
+Vous préférerez peut-être utiliser ceci.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DESC</span> joueurs;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfdf05ff" class="outline-4">
+<h4 id="orgfdf05ff"><span class="section-number-4">1.0.3.</span> Contraindre des tables</h4>
+<div class="outline-text-4" id="text-1-0-3">
+<p>
+Voir <a href="https://docs.oracle.com/cd/B19306_01/server.102/b14200/clauses002.htm">ce document</a> pour plus d'informations sur les contraintes.
+</p>
+
+<p>
+Nous ne sommes pas limités aux contraintes que nous avons définies
+lors de l'exécution de la requête <code>CREATE TABLE</code>. 
+</p>
+
+<p>
+Voici comment vous pouvez créer de nouvelles contraintes.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">JOUEURS</span>
+<span style="color: #5317ac;">ADD</span> <span style="color: #5317ac;">CONSTRAINT</span> ck_numero <span style="color: #5317ac;">CHECK</span> (NUMERO &gt; 0);
+</pre>
+</div>
+
+<p>
+Supprimons une contrainte.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> <span style="color: #5317ac;">DROP</span> <span style="color: #5317ac;">CONSTRAINT</span> ck_numero;
+</pre>
+</div>
+
+<p>
+Désactivons la contrainte <code>ck_salaire</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> DISABLE ck_salaire;
+</pre>
+</div>
+
+<p>
+Nous en avons besoin! Réactivons-la.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> ENABLE ck_salaire;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgda795f6" class="outline-4">
+<h4 id="orgda795f6"><span class="section-number-4">1.0.4.</span> Modifier la structure des tables</h4>
+<div class="outline-text-4" id="text-1-0-4">
+<p>
+<b>Ajouter</b> des <i>colonnes</i> est facile, trop facile en fait.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> <span style="color: #5317ac;">add</span> (
+      nationalite <span style="color: #005a5f;">VARCHAR</span>(30)
+      <span style="color: #5317ac;">CONSTRAINT</span> ck_nationalite
+      <span style="color: #5317ac;">CHECK</span> (nationalite <span style="color: #5317ac;">IN</span> ("Tunisienne", "Marocaine", "Algerienne")),
+);
+</pre>
+</div>
+
+<p>
+Les <b>modifier</b> est tout aussi simple.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> <span style="color: #5317ac;">modify</span> (
+      salaire <span style="color: #005a5f;">integer</span>
+);
+</pre>
+</div>
+
+<p>
+Idem pour les <b>supprimer</b>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">joueurs</span> <span style="color: #5317ac;">drop</span> (
+      nationalite
+);
+</pre>
+</div>
+
+<p>
+<b>Vidons</b> le contenu d'une <i>table</i>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql">truncate <span style="color: #5317ac;">table</span> joueurs;
+</pre>
+</div>
+
+<p>
+Vous souhaitez peut-être <b>supprimer</b> une <i>table</i>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">drop</span> <span style="color: #5317ac;">table</span> <span style="color: #721045;">joueurs</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2c8a12c" class="outline-4">
+<h4 id="org2c8a12c"><span class="section-number-4">1.0.5.</span> Créer des séquences</h4>
+<div class="outline-text-4" id="text-1-0-5">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">create</span> <span style="color: #5317ac;">sequence</span> <span style="color: #721045;">seq_joueurs</span> increment <span style="color: #5317ac;">by</span> 1 <span style="color: #5317ac;">start</span> <span style="color: #5317ac;">with</span> 1;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8a68298" class="outline-4">
+<h4 id="org8a68298"><span class="section-number-4">1.0.6.</span> Utiliser des séquences</h4>
+<div class="outline-text-4" id="text-1-0-6">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #505050;">/* Example 1 */</span>
+<span style="color: #5317ac;">insert</span> <span style="color: #5317ac;">into</span> joueurs <span style="color: #5317ac;">values</span> (
+       seq_joueurs.nextval,
+       "Msekni",
+       "Youssef",
+       20000,
+       "Tunisienne"
+);
+<span style="color: #505050;">/* Example 2 */</span>
+<span style="color: #5317ac;">insert</span> <span style="color: #5317ac;">into</span> joueurs <span style="color: #5317ac;">values</span>(
+       seq_joueurs.nextval,
+       "Jaziri",
+       "Seif",
+       18000,
+       "Tunisienne"
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org11933bd" class="outline-4">
+<h4 id="org11933bd"><span class="section-number-4">1.0.7.</span> Afficher la valeur des séquences</h4>
+<div class="outline-text-4" id="text-1-0-7">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">select</span> seq_joueurs.currval <span style="color: #5317ac;">from</span> joueurs;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge684d6b" class="outline-2">
+<h2 id="orge684d6b"><span class="section-number-2">2.</span> TP1: Langage de Définition des Données (LDD)</h2>
+<div class="outline-text-2" id="text-2">
+
+<div id="org968bee6" class="figure">
+<p><img src="schema-a.png" alt="schema-a.png" />
+</p>
+<p><span class="figure-number">Figure 1: </span>LDD Schemas</p>
+</div>
+</div>
+
+<div id="outline-container-org5bd0c7d" class="outline-3">
+<h3 id="org5bd0c7d"><span class="section-number-3">2.1.</span> Question 1</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+<span class="underline">Énoncé</span>: Donner l'ordre de création des tables.
+</p>
+
+<p>
+Étant donné que ces tables ont des relations entre elles, nous devons
+les créer dans le bon ordre:
+</p>
+
+<ol class="org-ol">
+<li><code>Restaurants</code></li>
+<li><code>Plats</code></li>
+<li><code>Livreurs</code></li>
+<li><code>Clients</code></li>
+<li><code>Commandes</code></li>
+<li><code>LigneCommande</code></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org4b6644e" class="outline-3">
+<h3 id="org4b6644e"><span class="section-number-3">2.2.</span> Question 2</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Créer toutes les tables en tenant en considération les contraintes suivantes:
+</p>
+<ul class="org-ul">
+<li>Le numéro de la CIN du livreur et la quantité commandée sont obligatoires.</li>
+<li>Le nom d'un restaurant, le login d'un client et le numéro de la cin du livreur sont uniques.</li>
+<li>Les spécialités sont: tunisienne, française, italienne, mexicaine, thaïlandaise et japonaise.</li>
+<li>Le rating a 0 comme valeur par défaut.</li>
+<li>Le rating est un entier supérieur ou égal à 0 qui décrit la note moyenne d'un plat et qui ne dépasse pas 5.</li>
+<li>Le numéro de téléphone et le numéro de la cin possèdent exactement 8 chiffres.</li>
+<li>La date de la livraison est toujours supérieure à la date de la commande.</li>
+<li>Les quantités d'un plat même commandé ne peuvent pas dépasser 20.</li>
+<li>Le prix d'un plat est un nombre strictement positif et ne dépasse pas les 80 dinars.</li>
+</ul>
+</div>
+
+<div id="outline-container-orgb3ff616" class="outline-4">
+<h4 id="orgb3ff616"><span class="section-number-4">2.2.1.</span> Création de la table restaurants</h4>
+<div class="outline-text-4" id="text-2-2-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">restaurants</span> (
+   idR VARCHAR2(20),
+   nom VARCHAR2(20) <span style="color: #5317ac;">UNIQUE</span>,
+   specialite VARCHAR2(20),
+   ville VARCHAR2(20),
+   tel <span style="color: #5317ac;">NUMBER</span>,
+   <span style="color: #5317ac;">CONSTRAINT</span> pk_idr
+   <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span> (idR),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_tel
+   <span style="color: #5317ac;">CHECK</span> (<span style="color: #5317ac;">LENGTH</span>(tel) = 8),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_specialite
+   <span style="color: #5317ac;">CHECK</span> (specialite <span style="color: #5317ac;">IN</span>
+         (<span style="color: #2544bb;">'tunisienne'</span>, <span style="color: #2544bb;">'fran&#231;aise'</span>, <span style="color: #2544bb;">'italienne'</span>,
+          <span style="color: #2544bb;">'mexicaine'</span>, <span style="color: #2544bb;">'thailandaise'</span>, <span style="color: #2544bb;">'japonaise'</span>))
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org510c0bd" class="outline-4">
+<h4 id="org510c0bd"><span class="section-number-4">2.2.2.</span> Création de la table plats</h4>
+<div class="outline-text-4" id="text-2-2-2">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">plats</span> (
+   ref_P VARCHAR2(20),
+   idR VARCHAR2(20),
+   nomP VARCHAR2(30),
+   prix <span style="color: #5317ac;">NUMBER</span>(4),
+   freeGluten <span style="color: #005a5f;">INTEGER</span>,
+   disponible <span style="color: #005a5f;">INTEGER</span>,
+   rating <span style="color: #005a5f;">INTEGER</span> <span style="color: #5317ac;">DEFAULT</span> 0,
+   <span style="color: #5317ac;">CONSTRAINT</span> pk_ref_p
+   <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span> (ref_P),
+   <span style="color: #5317ac;">CONSTRAINT</span> fk_idr
+   <span style="color: #5317ac;">FOREIGN</span> <span style="color: #5317ac;">KEY</span> (idR)
+   <span style="color: #5317ac;">REFERENCES</span> restaurants(idR),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_rating
+   <span style="color: #5317ac;">CHECK</span> (rating <span style="color: #5317ac;">BETWEEN</span> 0 <span style="color: #5317ac;">AND</span> 5),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_prix
+   <span style="color: #5317ac;">CHECK</span> (prix &gt; 0 <span style="color: #5317ac;">AND</span> prix &lt;= 80)
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4085e37" class="outline-4">
+<h4 id="org4085e37"><span class="section-number-4">2.2.3.</span> Création de la table livreurs</h4>
+<div class="outline-text-4" id="text-2-2-3">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">livreurs</span> (
+   idL <span style="color: #005a5f;">INTEGER</span>,
+   cin <span style="color: #005a5f;">INTEGER</span> <span style="color: #5317ac;">NOT</span> <span style="color: #5317ac;">NULL</span>,
+   nom VARCHAR2(30),
+   prenom VARCHAR2(30),
+   tel <span style="color: #5317ac;">number</span>,
+   dateRec <span style="color: #005a5f;">Date</span>,
+   <span style="color: #5317ac;">CONSTRAINT</span> pk_idl
+   <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span> (idL),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_tel_2
+   <span style="color: #5317ac;">CHECK</span> (<span style="color: #5317ac;">length</span>(tel) = 8),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_cin
+   <span style="color: #5317ac;">CHECK</span> (<span style="color: #5317ac;">LENGTH</span>(cin) = 8),
+   <span style="color: #5317ac;">CONSTRAINT</span> uq_cin
+   <span style="color: #5317ac;">UNIQUE</span> (cin)
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdef60e7" class="outline-4">
+<h4 id="orgdef60e7"><span class="section-number-4">2.2.4.</span> Création de la table clients</h4>
+<div class="outline-text-4" id="text-2-2-4">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">clients</span> (
+   idCli <span style="color: #005a5f;">INTEGER</span>,
+   login VARCHAR2(20) <span style="color: #5317ac;">UNIQUE</span>,
+   mdp VARCHAR2(20),
+   nom VARCHAR2(30),
+   prenom VARCHAR2(30),
+   tel <span style="color: #5317ac;">NUMBER</span>,
+   ville VARCHAR2(20),
+   <span style="color: #5317ac;">CONSTRAINT</span> pk_idcli
+   <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span> (idCli),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_tel_3
+   <span style="color: #5317ac;">CHECK</span> (<span style="color: #5317ac;">LENGTH</span>(tel) = 8)
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd27be1" class="outline-4">
+<h4 id="orgcd27be1"><span class="section-number-4">2.2.5.</span> Création de la table commandes</h4>
+<div class="outline-text-4" id="text-2-2-5">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">commandes</span> (
+   idC <span style="color: #005a5f;">INTEGER</span>,
+   idL <span style="color: #005a5f;">INTEGER</span>,
+   idCli <span style="color: #005a5f;">INTEGER</span>,
+   total <span style="color: #5317ac;">number</span>(4),
+   dateHCom <span style="color: #005a5f;">timestamp</span>,
+   dateHLiv <span style="color: #005a5f;">timestamp</span>,
+   paye <span style="color: #005a5f;">INTEGER</span>,
+   <span style="color: #5317ac;">CONSTRAINT</span> pk_idc
+   <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span> (idC),
+   <span style="color: #5317ac;">CONSTRAINT</span> fk_idl
+   <span style="color: #5317ac;">FOREIGN</span> <span style="color: #5317ac;">KEY</span> (idL)
+   <span style="color: #5317ac;">REFERENCES</span> livreurs(idL),
+   <span style="color: #5317ac;">CONSTRAINT</span> fk_idcli
+   <span style="color: #5317ac;">FOREIGN</span> <span style="color: #5317ac;">KEY</span> (idCli)
+   <span style="color: #5317ac;">REFERENCES</span> clients(idCli),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_date
+   <span style="color: #5317ac;">CHECK</span> (dateHLiv &gt; dateHCom)
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdcb8933" class="outline-4">
+<h4 id="orgdcb8933"><span class="section-number-4">2.2.6.</span> Création de la table lignecommande</h4>
+<div class="outline-text-4" id="text-2-2-6">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">lignecommande</span> (
+   idC <span style="color: #005a5f;">INTEGER</span>,
+   ref_P VARCHAR2(20),
+   quantite <span style="color: #005a5f;">INTEGER</span> <span style="color: #5317ac;">NOT</span> <span style="color: #5317ac;">NULL</span>,
+   <span style="color: #5317ac;">CONSTRAINT</span> pk_idc_2
+   <span style="color: #5317ac;">PRIMARY</span> <span style="color: #5317ac;">KEY</span> (idC, ref_P),
+   <span style="color: #5317ac;">CONSTRAINT</span> fk_idc
+   <span style="color: #5317ac;">FOREIGN</span> <span style="color: #5317ac;">KEY</span> (idC)
+   <span style="color: #5317ac;">REFERENCES</span> commandes(idC),
+   <span style="color: #5317ac;">CONSTRAINT</span> fk_ref_p
+   <span style="color: #5317ac;">FOREIGN</span> <span style="color: #5317ac;">KEY</span> (ref_P)
+   <span style="color: #5317ac;">REFERENCES</span> plats(ref_P),
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_quantite
+   <span style="color: #5317ac;">CHECK</span> (quantite &lt;= 20)
+);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org16033df" class="outline-3">
+<h3 id="org16033df"><span class="section-number-3">2.3.</span> Question 3</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Changer le type de la colonne disponible de la table <code>Plats</code> en chaine
+de caractères (3). Cette colonne prend comme valeur <code>{oui, non}</code> et
+non par défaut. Ajouter les contraintes nécessaires.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">plats</span> <span style="color: #5317ac;">MODIFY</span> (
+   disponible VARCHAR2(3) <span style="color: #5317ac;">DEFAULT</span> <span style="color: #2544bb;">'non'</span> <span style="color: #5317ac;">CHECK</span> (disponible <span style="color: #5317ac;">IN</span> (<span style="color: #2544bb;">'oui'</span>, <span style="color: #2544bb;">'non'</span>))
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfd7a203" class="outline-3">
+<h3 id="orgfd7a203"><span class="section-number-3">2.4.</span> Question 4</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+Ajouter une colonne rating au niveau de la table <code>Restaurants</code>. Ajouter
+les contraintes nécessaires à cette colonne pour qu'elle ait les mêmes
+propriétés que la colonne rating de la table PLATS.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">restaurants</span> <span style="color: #5317ac;">ADD</span> (
+   rating <span style="color: #005a5f;">INTEGER</span> <span style="color: #5317ac;">DEFAULT</span> 0,
+   <span style="color: #5317ac;">CONSTRAINT</span> ck_rating_2
+   <span style="color: #5317ac;">CHECK</span> (rating <span style="color: #5317ac;">BETWEEN</span> 0 <span style="color: #5317ac;">AND</span> 5)
+);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc046036" class="outline-3">
+<h3 id="orgc046036"><span class="section-number-3">2.5.</span> Question 5</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+Créer un synonyme public <code>LC</code> pour la table <code>LIGNECOMMANDE</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">PUBLIC</span> SYNONYM LC <span style="color: #5317ac;">FOR</span> lignecommande;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org7a52abb" class="outline-4">
+<h4 id="org7a52abb"><span class="section-number-4">2.5.1.</span> Lancer une description sur la table en utilisant le synonyme.</h4>
+<div class="outline-text-4" id="text-2-5-1">
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DESCRIBE</span> LC;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfd4b7d7" class="outline-3">
+<h3 id="orgfd4b7d7"><span class="section-number-3">2.6.</span> Question 6</h3>
+<div class="outline-text-3" id="text-2-6">
+<p>
+Créer une séquence <code>SEQ_RES</code> (qui sera utilisée dans le prochain TP) pour insérer des
+données au niveau de la table <code>Restaurants</code>. Cette séquence commence avec la valeur
+1 et sera incrémentée de 1.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">SEQUENCE</span> <span style="color: #721045;">seq_res</span> INCREMENT <span style="color: #5317ac;">BY</span> 1 <span style="color: #5317ac;">START</span> <span style="color: #5317ac;">WITH</span> 1;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgab7b537" class="outline-4">
+<h4 id="orgab7b537"><span class="section-number-4">2.6.1.</span> L'utilisation de cette séquence sera-t-il restreint uniquement à la</h4>
+<div class="outline-text-4" id="text-2-6-1">
+<p>
+table <code>Restaurants</code>?
+</p>
+
+<p>
+Cette sequence n'est pas restreinte à la table <code>Restaurants</code>, toutes
+autres tables peuvent l'utiliser.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb3bccbe" class="outline-3">
+<h3 id="orgb3bccbe"><span class="section-number-3">2.7.</span> Question 7</h3>
+<div class="outline-text-3" id="text-2-7">
+<p>
+Créer une vue <code>V_RESTO_GLUTF</code> qui permet de lister les restaurants qui proposent des
+plats sans gluten (=1) (et disponibles). L'affichage concernera le nom, la spécialité et la
+ville du restaurant ainsi que le nom, le prix et le rating du plat.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">VIEW</span> <span style="color: #721045;">v_resto_glutf</span> <span style="color: #5317ac;">AS</span>
+<span style="color: #5317ac;">SELECT</span> restaurants.nom, restaurants.specialite,
+       restaurants.ville, plats.nomP,
+       plats.prix, plats.rating
+<span style="color: #5317ac;">FROM</span> restaurants
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> plats
+<span style="color: #5317ac;">ON</span> restaurants.idR = plats.idR
+<span style="color: #5317ac;">WHERE</span> freeGluten = 1 <span style="color: #5317ac;">AND</span> disponible = <span style="color: #2544bb;">'oui'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org09d7252" class="outline-3">
+<h3 id="org09d7252"><span class="section-number-3">2.8.</span> Question 8</h3>
+<div class="outline-text-3" id="text-2-8">
+<p>
+Créer une vue <code>V_RESTO_TUN</code> ne permettant que la manipulation des restaurants de
+spécialité tunisienne.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">VIEW</span> <span style="color: #721045;">v_resto_tun</span> <span style="color: #5317ac;">AS</span>
+<span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> restaurants <span style="color: #5317ac;">WHERE</span> specialite = <span style="color: #2544bb;">'tunisienne'</span>
+<span style="color: #5317ac;">WITH</span> <span style="color: #5317ac;">CHECK</span> <span style="color: #5317ac;">OPTION</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7b68a48" class="outline-3">
+<h3 id="org7b68a48"><span class="section-number-3">2.9.</span> Question 9</h3>
+<div class="outline-text-3" id="text-2-9">
+<p>
+Créer une vue <code>V_COM_P_DET</code> qui permet de lister les détails des commandes payées
+<code>(COMMANDES.paye = 1)</code>. L'affichage concernera, pour chaque commande, son ID, le nom des plats
+et les quantités commandées.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">VIEW</span> <span style="color: #721045;">v_com_p_det</span> <span style="color: #5317ac;">AS</span>
+<span style="color: #5317ac;">SELECT</span> commandes.idC, plats.nomP, LC.quantite
+<span style="color: #5317ac;">FROM</span> commandes
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> LC
+<span style="color: #5317ac;">ON</span> commandes.idC = LC.idC
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> plats
+<span style="color: #5317ac;">ON</span> LC.ref_P = plats.ref_P
+<span style="color: #5317ac;">WHERE</span> commandes.paye = 1;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2a91932" class="outline-3">
+<h3 id="org2a91932"><span class="section-number-3">2.10.</span> Question 10</h3>
+<div class="outline-text-3" id="text-2-10">
+<p>
+Créer un index <code>IND_GLU</code> permettant l'accélération de la recherche des plats sans gluten.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> index ind_glu
+<span style="color: #5317ac;">ON</span> plats(freeGluten);
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org5d40104" class="outline-4">
+<h4 id="org5d40104"><span class="section-number-4">2.10.1.</span> Cet index peut-il être unique?</h4>
+<div class="outline-text-4" id="text-2-10-1">
+<p>
+Non, parcequ'il n'y a aucune garantie que la valeur de la colonne freeGluten va etre unique pour tout les plats.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org077b5fe" class="outline-2">
+<h2 id="org077b5fe"><span class="section-number-2">3.</span> TP3: Langage d'Interrogation des Données (LID)</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org1d6edbc" class="outline-3">
+<h3 id="org1d6edbc"><span class="section-number-3">3.1.</span> Question 1</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+Afficher toutes les informations concernant tous les restaurants.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> restaurants;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org16ef689" class="outline-3">
+<h3 id="org16ef689"><span class="section-number-3">3.2.</span> Question 2</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+Afficher la liste des restaurants de chaque ville, ordonner l'affichage par ordre décroissant
+des villes.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> restaurants <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> ville <span style="color: #5317ac;">DESC</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd44b2d8" class="outline-3">
+<h3 id="orgd44b2d8"><span class="section-number-3">3.3.</span> Question 3</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Afficher les ID des plats commandés au moins une fois.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> plats.ref_p <span style="color: #5317ac;">FROM</span> plats
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> lignecommande
+<span style="color: #5317ac;">ON</span> lignecommande.ref_p = plats.ref_p
+<span style="color: #5317ac;">WHERE</span> lignecommande.quantite &gt;= 1;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga148090" class="outline-3">
+<h3 id="orga148090"><span class="section-number-3">3.4.</span> Question 4</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Afficher le nom des restaurants dont le rating n'a pas été calculé.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> nom <span style="color: #5317ac;">FROM</span> restaurants <span style="color: #5317ac;">WHERE</span> RATING <span style="color: #5317ac;">IS</span> <span style="color: #5317ac;">NULL</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org682e539" class="outline-3">
+<h3 id="org682e539"><span class="section-number-3">3.5.</span> Question 5</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+Afficher la liste des plats disponibles par ordre décroissant prix.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> plats <span style="color: #5317ac;">WHERE</span> disponible = <span style="color: #2544bb;">'oui'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org433e596" class="outline-3">
+<h3 id="org433e596"><span class="section-number-3">3.6.</span> Question 6</h3>
+<div class="outline-text-3" id="text-3-6">
+<p>
+Afficher les restaurants de spécialité tunisienne et qui sont situés à
+<i>'Tunis'</i>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> restaurants
+<span style="color: #5317ac;">WHERE</span> specialite = <span style="color: #2544bb;">'tunisienne'</span>
+<span style="color: #5317ac;">AND</span> ville = <span style="color: #2544bb;">'Tunis'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0a7aa63" class="outline-3">
+<h3 id="org0a7aa63"><span class="section-number-3">3.7.</span> Question 7</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+Afficher les noms en majuscules, les prénoms en minuscule, les villes
+avec la première lettre en majuscule de tous les clients de
+<i>'Resto.tn'</i>. Ordonner la liste par ville.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">UPPER</span>(nom), <span style="color: #8f0075;">LOWER</span>(prenom), INITCAP(ville)
+<span style="color: #5317ac;">FROM</span> clients <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> ville;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge2900b9" class="outline-3">
+<h3 id="orge2900b9"><span class="section-number-3">3.8.</span> Question 8</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+Afficher la liste des clients dont la première lettre de leur nom est <i>'b'</i> et où leur prénom se
+termine par <i>'d'</i> ou contient la lettre <i>'a'</i>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> clients
+<span style="color: #5317ac;">WHERE</span> nom <span style="color: #5317ac;">LIKE</span> <span style="color: #2544bb;">'b%'</span> <span style="color: #5317ac;">AND</span> (prenom <span style="color: #5317ac;">LIKE</span> <span style="color: #2544bb;">'%d'</span> <span style="color: #5317ac;">OR</span> prenom <span style="color: #5317ac;">LIKE</span> <span style="color: #2544bb;">'%a%'</span>);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4c8ba84" class="outline-3">
+<h3 id="org4c8ba84"><span class="section-number-3">3.9.</span> Question 9</h3>
+<div class="outline-text-3" id="text-3-9">
+<p>
+Afficher la liste des livreurs qui ont été embauchés depuis 8 mois.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> livreurs <span style="color: #5317ac;">WHERE</span> FLOOR(MONTHS_BETWEEN(sysdate, daterec)) &gt;= 8;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org21e4f11" class="outline-3">
+<h3 id="org21e4f11"><span class="section-number-3">3.10.</span> Question 10</h3>
+<div class="outline-text-3" id="text-3-10">
+<p>
+Afficher toutes les commandes qui ont été passées pendant le troisième
+trimestre de l'année dernière.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> commandes
+<span style="color: #5317ac;">WHERE</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> datehcom) = <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">from</span> sysdate) - 1
+<span style="color: #5317ac;">AND</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">MONTH</span> <span style="color: #5317ac;">FROM</span> datehcom) <span style="color: #5317ac;">BETWEEN</span> 6 <span style="color: #5317ac;">AND</span> 9;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga780bb4" class="outline-3">
+<h3 id="orga780bb4"><span class="section-number-3">3.11.</span> Question 11</h3>
+<div class="outline-text-3" id="text-3-11">
+<p>
+Afficher la liste des plats sans gluten dont le prix est compris entre
+10 et 30 dinars ordonnée par disponibilité (les plats disponibles sont
+affichés en premier lieu).
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> plats
+<span style="color: #5317ac;">WHERE</span> freegluten = 1 <span style="color: #5317ac;">AND</span> prix <span style="color: #5317ac;">BETWEEN</span> 10 <span style="color: #5317ac;">AND</span> 30
+<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> disponible <span style="color: #5317ac;">DESC</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org570ad8f" class="outline-3">
+<h3 id="org570ad8f"><span class="section-number-3">3.12.</span> Question 12</h3>
+<div class="outline-text-3" id="text-3-12">
+<p>
+Afficher les commandes qui ont été livrées en moins de 30 minutes,
+l'affichage concernera l'ID de la commande, celui du livreur ainsi que
+le temps de livraison de la commande et sera ordonné selon ce dernier
+par ordre décroissant.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> idc, idl, <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">MINUTE</span> <span style="color: #5317ac;">FROM</span> (datehliv - datehcom))
+<span style="color: #5317ac;">FROM</span> commandes
+<span style="color: #5317ac;">WHERE</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">MINUTE</span> <span style="color: #5317ac;">FROM</span> (datehliv - datehcom)) &lt;= 30
+<span style="color: #5317ac;">AND</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">HOUR</span> <span style="color: #5317ac;">FROM</span> (datehliv - datehcom)) = 0
+<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> (datehliv - datehcom) <span style="color: #5317ac;">DESC</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc2dd584" class="outline-3">
+<h3 id="orgc2dd584"><span class="section-number-3">3.13.</span> Question 13</h3>
+<div class="outline-text-3" id="text-3-13">
+<p>
+Afficher le prix du plat le plus cher, celui du plat le moins cher ainsi que le prix moyen
+arrondi des plats et ce pour:
+</p>
+
+<ul class="org-ul">
+<li>Tous les plats</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(prix), <span style="color: #8f0075;">MIN</span>(prix), <span style="color: #8f0075;">AVG</span>(prix) <span style="color: #5317ac;">FROM</span> plats;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Les plats sans gluten:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(prix), <span style="color: #8f0075;">MIN</span>(prix), <span style="color: #8f0075;">AVG</span>(prix) <span style="color: #5317ac;">FROM</span> plats <span style="color: #5317ac;">WHERE</span> freegluten = 1;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Les plats du restaurant <i>'R1'</i>:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(prix), <span style="color: #8f0075;">MIN</span>(prix), <span style="color: #8f0075;">AVG</span>(prix) <span style="color: #5317ac;">FROM</span> plats <span style="color: #5317ac;">WheRE</span> idr = <span style="color: #2544bb;">'R1'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga47e2bf" class="outline-3">
+<h3 id="orga47e2bf"><span class="section-number-3">3.14.</span> Question 14</h3>
+<div class="outline-text-3" id="text-3-14">
+<p>
+Afficher une liste numérotée des plats selon un ordre décroissant des prix.
+</p>
+
+<ul class="org-ul">
+<li>Un premier affichage concernera le numéro, le nom du plat et son prix.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> ROW_NUMBER() OVER(<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> prix <span style="color: #5317ac;">DESC</span>) <span style="color: #5317ac;">AS</span> "N Ligne", ref_P, nomP, prix <span style="color: #5317ac;">FROM</span> Plats p;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Un deuxième affichage concernera le numéro et tous les champs relatifs au plat:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> ROW_NUMBER() OVER(<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> prix <span style="color: #5317ac;">DESC</span>) <span style="color: #5317ac;">AS</span> "N Ligne", p.* <span style="color: #5317ac;">FROM</span> Plats p;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org329b7f5" class="outline-3">
+<h3 id="org329b7f5"><span class="section-number-3">3.15.</span> Question 15</h3>
+<div class="outline-text-3" id="text-3-15">
+<p>
+Affiner la liste précédente selon la composition des plats (avec ou sans gluten).
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> ROW_NUMBER() OVER(<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> prix <span style="color: #5317ac;">DESC</span>) <span style="color: #5317ac;">AS</span> "N Ligne", p.* <span style="color: #5317ac;">FROM</span> Plats p <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> freeGluten;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgafd87ef" class="outline-3">
+<h3 id="orgafd87ef"><span class="section-number-3">3.16.</span> Question 16</h3>
+<div class="outline-text-3" id="text-3-16">
+<p>
+Afficher un classement des restaurants selon le plus noté (rating),
+toutes les informations concernant les restaurants doivent être
+affichées.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> RANK() OVER(<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> rating <span style="color: #5317ac;">DESC</span>), R.* <span style="color: #5317ac;">FROM</span> Restaurants R;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6e0ea0d" class="outline-3">
+<h3 id="org6e0ea0d"><span class="section-number-3">3.17.</span> Question 17</h3>
+<div class="outline-text-3" id="text-3-17">
+<p>
+Affiner l'affichage précédent avec un classement des restaurants les plus notés selon les
+spécialités.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> RANK() OVER(<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> rating <span style="color: #5317ac;">DESC</span>), R.* <span style="color: #5317ac;">FROM</span> Restaurants R <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> specialite;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org01ef9fd" class="outline-3">
+<h3 id="org01ef9fd"><span class="section-number-3">3.18.</span> Question 18</h3>
+<div class="outline-text-3" id="text-3-18">
+<p>
+Calculer le prix moyen des plats de chaque restaurant.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">AVG</span>(prix) <span style="color: #5317ac;">AS</span> "Prix Moyen", P.idR, R.nom
+<span style="color: #5317ac;">FROM</span> plats P, restaurants R
+<span style="color: #5317ac;">WHERE</span> R.idR = P.idR
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> P.idR, R.nom;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb851691" class="outline-3">
+<h3 id="orgb851691"><span class="section-number-3">3.19.</span> Question 19</h3>
+<div class="outline-text-3" id="text-3-19">
+<p>
+Une offre promotionnelle a été lancée pour certains plats (comme indiqué sur l'extrait):
+</p>
+<ul class="org-ul">
+<li>Si le prix initial du plat est entre 5 et 20 dinars et que son rating est &gt; 2, alors le prix sera diminué de 10%.</li>
+<li>Si le prix &gt; 20 dinars et que le rating du restaurant = 5 alors le prix sera diminué de 15%.</li>
+<li>Sinon pas de changements au niveau du prix.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> idR, nomP, rating, prix <span style="color: #5317ac;">As</span> "Ancien Prix",
+                  <span style="color: #5317ac;">CASE</span>
+                        <span style="color: #5317ac;">WHEN</span> prix <span style="color: #5317ac;">BETWEEN</span> 5 <span style="color: #5317ac;">AND</span> 20 <span style="color: #5317ac;">AND</span> rating &gt; 2 <span style="color: #5317ac;">THEN</span> prix * 0.9
+                        <span style="color: #5317ac;">WHEN</span> prix &gt; 20 <span style="color: #5317ac;">AND</span> rating = 5 <span style="color: #5317ac;">THEN</span> prix * 0.85
+                        <span style="color: #5317ac;">ELSE</span> prix
+                  <span style="color: #5317ac;">END</span> <span style="color: #5317ac;">AS</span> "Nouveau Prix"
+<span style="color: #5317ac;">FROM</span> plats;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf144313" class="outline-3">
+<h3 id="orgf144313"><span class="section-number-3">3.20.</span> Question 20</h3>
+<div class="outline-text-3" id="text-3-20">
+<p>
+Afficher la liste des restaurants où tous les plats sont non disponibles.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> Restaurants R, Plats P
+<span style="color: #5317ac;">WHERE</span> P.idR = R.idR
+MINUS
+<span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> Restaurants R, Plats P
+<span style="color: #5317ac;">WHERE</span> P.idR = R.idR <span style="color: #5317ac;">and</span> P.disponible = <span style="color: #2544bb;">'oui'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org61e9f52" class="outline-3">
+<h3 id="org61e9f52"><span class="section-number-3">3.21.</span> Question 21</h3>
+<div class="outline-text-3" id="text-3-21">
+<p>
+Afficher la liste des plats avec gluten et qui sont disponibles à Tunis ou à Sousse.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> Restaurants R
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Plats P
+<span style="color: #5317ac;">ON</span> P.idR = R.idR
+<span style="color: #5317ac;">WHERE</span> P.disponible = <span style="color: #2544bb;">'non'</span> <span style="color: #5317ac;">AND</span> P.freeGluten = 0 <span style="color: #5317ac;">AND</span> (VILLE = <span style="color: #2544bb;">'Tunis'</span> <span style="color: #5317ac;">OR</span> VILLE = <span style="color: #2544bb;">'Sousse'</span>);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc0b6785" class="outline-3">
+<h3 id="orgc0b6785"><span class="section-number-3">3.22.</span> Question 22</h3>
+<div class="outline-text-3" id="text-3-22">
+<p>
+Afficher les références des plats des commandes de la question 8.
+</p>
+
+<ul class="org-ul">
+<li>Il y a deux façons de procéder, soit avec une jointure:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> ref_P <span style="color: #5317ac;">FROM</span> LC
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> commandes <span style="color: #5317ac;">AS</span> <span style="color: #2544bb;">'com'</span>
+<span style="color: #5317ac;">ON</span> lc.idc = com.idc
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> clients <span style="color: #5317ac;">AS</span> <span style="color: #2544bb;">'cl'</span>
+<span style="color: #5317ac;">ON</span> com.idcli = cl.idcli
+<span style="color: #5317ac;">WHERE</span> cl.nom <span style="color: #5317ac;">LIKE</span> <span style="color: #2544bb;">'%a%'</span>;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Ou avec une sélection imbriquée:</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> ref_P <span style="color: #5317ac;">FROM</span> LC 
+<span style="color: #5317ac;">WHERE</span> idc <span style="color: #5317ac;">IN</span> (<span style="color: #5317ac;">SELECT</span> idc <span style="color: #5317ac;">FROM</span> commandes <span style="color: #5317ac;">WHERE</span> idcli <span style="color: #5317ac;">IN</span> ( <span style="color: #5317ac;">SELECT</span> idcli <span style="color: #5317ac;">FROM</span> clients <span style="color: #5317ac;">WHERE</span> nom <span style="color: #5317ac;">LIKE</span> <span style="color: #2544bb;">'%a%'</span> ) )
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1c3d76a" class="outline-3">
+<h3 id="org1c3d76a"><span class="section-number-3">3.23.</span> Question 23</h3>
+<div class="outline-text-3" id="text-3-23">
+<p>
+Calculer le prix moyen des plats du restaurant Chili's.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">AVG</span>(prix) <span style="color: #5317ac;">FROM</span> plats <span style="color: #5317ac;">WHERE</span> idr = (<span style="color: #5317ac;">SELECT</span> idr <span style="color: #5317ac;">FROM</span> restaurants <span style="color: #5317ac;">WHERE</span> nom <span style="color: #5317ac;">LIKE</span> <span style="color: #2544bb;">'Chili''s'</span>);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6766a92" class="outline-3">
+<h3 id="org6766a92"><span class="section-number-3">3.24.</span> Question 24</h3>
+<div class="outline-text-3" id="text-3-24">
+<p>
+Afficher le nom des restaurants qui offrent des plats à moins de 15 dinars.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> nom <span style="color: #5317ac;">FROM</span> restaurants r
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> plats p
+<span style="color: #5317ac;">ON</span> p.idR = r.idR
+<span style="color: #5317ac;">WHERE</span> p.prix &lt; 15;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8b6b133" class="outline-3">
+<h3 id="org8b6b133"><span class="section-number-3">3.25.</span> Question 25</h3>
+<div class="outline-text-3" id="text-3-25">
+<p>
+Calculer le prix du plat le plus cher des restaurants italiens.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> nomP, prix <span style="color: #5317ac;">FROM</span> plats P
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> restaurants R
+<span style="color: #5317ac;">ON</span> R.idR = P.idR
+<span style="color: #5317ac;">WHERE</span> R.specialite = <span style="color: #2544bb;">'italienne'</span> <span style="color: #5317ac;">AND</span> P.prix = (<span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(prix) <span style="color: #5317ac;">FROM</span> plats <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> restaurants <span style="color: #5317ac;">ON</span> plats.idR = restaurants.idR <span style="color: #5317ac;">where</span> restaurants.specialite = <span style="color: #2544bb;">'italienne'</span>);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org539954a" class="outline-3">
+<h3 id="org539954a"><span class="section-number-3">3.26.</span> Question 26</h3>
+<div class="outline-text-3" id="text-3-26">
+<p>
+Pour fidéliser les clients, Resto.tn offre un système de parrainage : un client peut parrainer
+d'autres clients et bénéficier de réductions privilégiées.
+</p>
+</div>
+
+<div id="outline-container-org8dc8657" class="outline-4">
+<h4 id="org8dc8657"><span class="section-number-4">3.26.1.</span> a)</h4>
+<div class="outline-text-4" id="text-3-26-1">
+<p>
+Ajouter la colonne <code>parrain</code> de type number à la table <code>Clients</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">ALTER</span> <span style="color: #5317ac;">TABLE</span> <span style="color: #721045;">Clients</span>
+<span style="color: #5317ac;">ADD</span> parrain <span style="color: #5317ac;">NUMBER</span>
+<span style="color: #5317ac;">REFERENCES</span> clients(idCli);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd5803c8" class="outline-4">
+<h4 id="orgd5803c8"><span class="section-number-4">3.26.2.</span> b)</h4>
+<div class="outline-text-4" id="text-3-26-2">
+<p>
+Marie Dupont est la marraine des clients 2,3 et 4. Sarah Ayadi est la marraine
+des clients 6,7 et 8. Mettez à jour les lignes adéquates.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">UPDATE</span> Clients <span style="color: #5317ac;">SET</span>
+parrain=(<span style="color: #5317ac;">SELECT</span> idCli <span style="color: #5317ac;">from</span> Clients <span style="color: #5317ac;">WHERE</span> nom=<span style="color: #2544bb;">'Dupont'</span> <span style="color: #5317ac;">AND</span> prenom=<span style="color: #2544bb;">'Marie'</span>)
+<span style="color: #5317ac;">WHERE</span> idCli <span style="color: #5317ac;">IN</span> (2,3,4);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge45b31e" class="outline-4">
+<h4 id="orge45b31e"><span class="section-number-4">3.26.3.</span> c)</h4>
+<div class="outline-text-4" id="text-3-26-3">
+<p>
+Afficher pour chaque client, son nom et prénom ainsi que le nom et prénom de
+son parrain (sa marraine).
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> C.nom, C.prenom, P.nom <span style="color: #5317ac;">AS</span> <span style="color: #2544bb;">'Nom du parrain'</span>, P.prenom <span style="color: #5317ac;">AS</span> <span style="color: #2544bb;">'Prenom du parrain'</span>
+<span style="color: #5317ac;">FROM</span> clients P
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> clients P
+<span style="color: #5317ac;">ON</span> C.idCli = P.parrain;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4149279" class="outline-3">
+<h3 id="org4149279"><span class="section-number-3">3.27.</span> Question 27</h3>
+<div class="outline-text-3" id="text-3-27">
+<p>
+Afficher la liste des clients fidèles (qui se rendent uniquement) au restaurant <code>R1</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> Clients Cli
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Commandes Com
+<span style="color: #5317ac;">ON</span> Cli.idCli = Com.idCli
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> LC
+<span style="color: #5317ac;">ON</span> LC.idC = Com.idC
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Plats P
+<span style="color: #5317ac;">ON</span> P.ref_P = LC.ref_P
+MINUS
+<span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> Clients Cli
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Commandes Com
+<span style="color: #5317ac;">ON</span> Cli.idCli = Com.idCli
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> LC
+<span style="color: #5317ac;">ON</span> LC.idC = Com.idC
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Plats P
+<span style="color: #5317ac;">ON</span> P.ref_P = LC.ref_P
+<span style="color: #5317ac;">WHERE</span> P.idR = <span style="color: #2544bb;">'R1'</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga837df1" class="outline-3">
+<h3 id="orga837df1"><span class="section-number-3">3.28.</span> Question 29</h3>
+<div class="outline-text-3" id="text-3-28">
+<p>
+Calculer le prix du plat le plus cher pour chaque spécialité, afficher pour cela le prix ainsi
+que la spécialité. Ordonner le résultat par prix décroissant.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(prix), specialite <span style="color: #5317ac;">from</span> plats P, restaurants r 
+<span style="color: #5317ac;">WHERE</span> R.idR = P.idR <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> specialite <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> <span style="color: #8f0075;">MAX</span>(prix) <span style="color: #5317ac;">DESC</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge2d4f2d" class="outline-3">
+<h3 id="orge2d4f2d"><span class="section-number-3">3.29.</span> Question 30</h3>
+<div class="outline-text-3" id="text-3-29">
+<p>
+Afficher le nombre de commandes effectuées par chaque client, en mentionnant son nom et
+son prénom en plus du nombre de ses commandes.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> cli.nom, cli.prenom, <span style="color: #8f0075;">COUNT</span>(c.idc)
+<span style="color: #5317ac;">FROM</span> clients cli 
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> commandes c 
+<span style="color: #5317ac;">ON</span> cli.idcli = c.idcli 
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> cli.nom, cli.prenom;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb880976" class="outline-4">
+<h4 id="orgb880976"><span class="section-number-4">3.29.1.</span> a)</h4>
+<div class="outline-text-4" id="text-3-29-1">
+<p>
+Affiner la requête pour n'afficher que les clients qui ont effectué plus d'une
+commande.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> cli.nom, cli.prenom, <span style="color: #8f0075;">count</span>(c.idc)
+<span style="color: #5317ac;">FROM</span> clients cli 
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> commandes c 
+<span style="color: #5317ac;">ON</span> cli.idcli = c.idcli 
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> cli.nom, cli.prenom
+<span style="color: #5317ac;">HAVING</span> <span style="color: #8f0075;">COUNT</span>(c.idc) &gt; 1;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd91f8cb" class="outline-3">
+<h3 id="orgd91f8cb"><span class="section-number-3">3.30.</span> Question 31</h3>
+<div class="outline-text-3" id="text-3-30">
+<p>
+Afficher les clients qui ont effectué le plus de commandes (référez-vous à la question 26).
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> cli.nom, cli.prenom, <span style="color: #8f0075;">count</span>(c.idc)
+<span style="color: #5317ac;">FROM</span> clients cli 
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> commandes c 
+<span style="color: #5317ac;">ON</span> cli.idcli = c.idcli 
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> cli.nom, cli.prenom
+<span style="color: #5317ac;">HAVING</span> <span style="color: #8f0075;">COUNT</span>(c.idc) = ( <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(<span style="color: #8f0075;">COUNT</span>(c.idc))
+                        <span style="color: #5317ac;">FROM</span> Commandes C
+                        <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> c.idc );
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf858eea" class="outline-3">
+<h3 id="orgf858eea"><span class="section-number-3">3.31.</span> Question 33</h3>
+<div class="outline-text-3" id="text-3-31">
+<p>
+Faites le nécessaire pour avoir l'affichage de l'extrait suivant relatif à toutes les commandes
+de la base Resto.tn:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Détail Des Commandes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">La commande 1 a été livrée au client Bali Rym au bout de 49 minutes par Ben Med Sami le 19 janvier 2018</td>
+</tr>
+
+<tr>
+<td class="org-left">La commande 2 a été livrée au client Ben Ahmed Med au bout de 76 minutes par Ayari Lotfi le 10 janvier 2018</td>
+</tr>
+
+<tr>
+<td class="org-left">La commande 3 a été livrée au client Ben Salah Khadija au bout de 15 minutes par Sadok Ahmed le 15 juin 2018</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #2544bb;">'La commande '</span> || idC || <span style="color: #2544bb;">' a ete livree au client '</span> || cli.nom || <span style="color: #2544bb;">' '</span> || cli.prenom || <span style="color: #2544bb;">' par '</span> || liv.nom || <span style="color: #2544bb;">' '</span> || liv.prenom <span style="color: #5317ac;">AS</span> "Details Des Commandes" <span style="color: #5317ac;">FROM</span> Clients cli
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Commandes com
+<span style="color: #5317ac;">ON</span> cli.idCli = com.idCli
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Livreurs liv
+<span style="color: #5317ac;">ON</span> liv.idL = com.idL;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org023b9a1" class="outline-2">
+<h2 id="org023b9a1"><span class="section-number-2">4.</span> TP HR</h2>
+<div class="outline-text-2" id="text-4">
+
+<div id="orgefd66c9" class="figure">
+<p><img src="schema-b.png" alt="schema-b.png" />
+</p>
+<p><span class="figure-number">Figure 2: </span>HR schemas</p>
+</div>
+</div>
+
+<div id="outline-container-org416e9b1" class="outline-3">
+<h3 id="org416e9b1"><span class="section-number-3">4.1.</span> Partie 1</h3>
+<div class="outline-text-3" id="text-4-1">
+</div>
+<div id="outline-container-org0e0a56e" class="outline-4">
+<h4 id="org0e0a56e"><span class="section-number-4">4.1.1.</span> Question 1</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+Afficher la liste des employés qui n'ont pas de commission. Cette liste doit
+être ordonnée selon un ordre descendant de leur nom.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> *
+<span style="color: #5317ac;">FROM</span> EMPLOYEES
+<span style="color: #5317ac;">WHERE</span> COMMISSION_PCT <span style="color: #5317ac;">IS</span> <span style="color: #5317ac;">NULL</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga7baa32" class="outline-4">
+<h4 id="orga7baa32"><span class="section-number-4">4.1.2.</span> Question 2</h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+Afficher la liste des employés, leur nom, prénom et salaire. Cette liste doit
+être numérotée pour chaque département et selon un ordre descendant du salaire.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> ROW_NUMBER() OVER(<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> DEPARTMENT_ID),
+       LAST_NAME,
+       FIRST_NAME,
+       SALARY
+<span style="color: #5317ac;">FROM</span> EMPLOYEES
+<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> SALARY <span style="color: #5317ac;">DESC</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1d8dcaa" class="outline-4">
+<h4 id="org1d8dcaa"><span class="section-number-4">4.1.3.</span> Question 3</h4>
+<div class="outline-text-4" id="text-4-1-3">
+<p>
+Afficher le résultat suivant:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">nom et prénom</th>
+<th scope="col" class="org-right">numéro département</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Raphaely Den</td>
+<td class="org-right">30</td>
+</tr>
+
+<tr>
+<td class="org-left">Khoo Alexander</td>
+<td class="org-right">30</td>
+</tr>
+
+<tr>
+<td class="org-left">Baida Shelli</td>
+<td class="org-right">30</td>
+</tr>
+
+<tr>
+<td class="org-left">Tobias Sigal</td>
+<td class="org-right">30</td>
+</tr>
+
+<tr>
+<td class="org-left">Himuro Guy</td>
+<td class="org-right">30</td>
+</tr>
+
+<tr>
+<td class="org-left">Colmenares Karen</td>
+<td class="org-right">30</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> LAST_NAME || <span style="color: #2544bb;">' '</span> || FIRST_NAME <span style="color: #5317ac;">AS</span> "Nom et prenom",
+       DEPARTMENT_ID <span style="color: #5317ac;">AS</span> "Numero departement"
+<span style="color: #5317ac;">FROM</span> EMPLOYEES
+<span style="color: #5317ac;">WHERE</span> DEPARTMENT_ID = 30;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org196b1fc" class="outline-4">
+<h4 id="org196b1fc"><span class="section-number-4">4.1.4.</span> Question 4</h4>
+<div class="outline-text-4" id="text-4-1-4">
+<p>
+Afficher la liste des départements comme suit:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">ID DEPT</th>
+<th scope="col" class="org-left">NOM DEPT</th>
+<th scope="col" class="org-right">LOCATION</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">10</td>
+<td class="org-left">Adm.</td>
+<td class="org-right">1700</td>
+</tr>
+
+<tr>
+<td class="org-right">20</td>
+<td class="org-left">Mar.</td>
+<td class="org-right">1800</td>
+</tr>
+
+<tr>
+<td class="org-right">30</td>
+<td class="org-left">Pur.</td>
+<td class="org-right">1700</td>
+</tr>
+
+<tr>
+<td class="org-right">40</td>
+<td class="org-left">Hum.</td>
+<td class="org-right">2400</td>
+</tr>
+
+<tr>
+<td class="org-right">50</td>
+<td class="org-left">Shi.</td>
+<td class="org-right">1500</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> DEPARTMENT_ID <span style="color: #5317ac;">AS</span> "ID DEPT",
+       SUBSTR(DEPARTMENT_NAME, 1, 3) || <span style="color: #2544bb;">'.'</span> <span style="color: #5317ac;">AS</span> "NOM DEPT",
+       LOCATION_ID <span style="color: #5317ac;">AS</span> "LOCATION"
+<span style="color: #5317ac;">FROM</span> DEPARTMENTS
+<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> DEPARTMENT_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaa3f3cd" class="outline-4">
+<h4 id="orgaa3f3cd"><span class="section-number-4">4.1.5.</span> Question 5</h4>
+<div class="outline-text-4" id="text-4-1-5">
+<p>
+Afficher les noms des employés et un statut d'évaluation tel que si
+l'année d'embauche est 1998 affichez le statut <code>NEEDS REVIEW</code> sinon
+affichez <code>NOT THIS YEAR</code>, nommez la colonne du statut d'évaluation
+REVIEW.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> LAST_NAME,
+<span style="color: #5317ac;">CASE</span>
+    <span style="color: #5317ac;">WHEN</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) = <span style="color: #2544bb;">'1998'</span> <span style="color: #5317ac;">THEN</span> <span style="color: #2544bb;">'NEEDS REVIEW'</span>
+    <span style="color: #5317ac;">WHEN</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) != <span style="color: #2544bb;">'1998'</span> <span style="color: #5317ac;">THEN</span> <span style="color: #2544bb;">'NOT THIS YEAR'</span>
+<span style="color: #5317ac;">END</span> <span style="color: #5317ac;">AS</span> "REVIEW"
+<span style="color: #5317ac;">FROM</span> EMPLOYEES;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcedb1ba" class="outline-4">
+<h4 id="orgcedb1ba"><span class="section-number-4">4.1.6.</span> Question 6</h4>
+<div class="outline-text-4" id="text-4-1-6">
+<p>
+Afficher la liste des employés, l’année, le mois en lettre et le numéro du trimestre de
+leur date d’embauche par ordre décroissant de l’année.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> LAST_NAME,
+       FIRST_NAME,
+       <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) <span style="color: #5317ac;">AS</span> "<span style="color: #5317ac;">Year</span>",
+       TO_CHAR(HIRE_DATE, <span style="color: #2544bb;">'Month'</span>) <span style="color: #5317ac;">AS</span> "<span style="color: #5317ac;">Month</span>",
+       TO_CHAR(HIRE_DATE, <span style="color: #2544bb;">'Q'</span>) <span style="color: #5317ac;">AS</span> "Quarter"
+<span style="color: #5317ac;">FROM</span> EMPLOYEES
+<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) <span style="color: #5317ac;">DESC</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3ce682a" class="outline-4">
+<h4 id="org3ce682a"><span class="section-number-4">4.1.7.</span> Question 7</h4>
+<div class="outline-text-4" id="text-4-1-7">
+<p>
+Afficher pour chacun des employés du département 30 son ancienneté (nombre total
+de mois travaillés).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> LAST_NAME || <span style="color: #2544bb;">' '</span> || FIRST_NAME <span style="color: #5317ac;">AS</span> "Nom et prenom",
+       ROUND(MONTHS_BETWEEN(SYSDATE, HIRE_DATE)) <span style="color: #5317ac;">AS</span> "Anciennete"
+<span style="color: #5317ac;">FROM</span> EMPLOYEES
+<span style="color: #5317ac;">WHERE</span> DEPARTMENT_ID = 30;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb1507f" class="outline-3">
+<h3 id="orgcb1507f"><span class="section-number-3">4.2.</span> Partie 2</h3>
+<div class="outline-text-3" id="text-4-2">
+</div>
+<div id="outline-container-org8acb0ef" class="outline-4">
+<h4 id="org8acb0ef"><span class="section-number-4">4.2.1.</span> Question 1</h4>
+<div class="outline-text-4" id="text-4-2-1">
+<p>
+Afficher le salaire maximum et minimum à partir de la table <code>EMPLOYEES</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(salary), <span style="color: #8f0075;">MIN</span>(salary)
+<span style="color: #5317ac;">FROM</span> Employees;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org065a1b2" class="outline-4">
+<h4 id="org065a1b2"><span class="section-number-4">4.2.2.</span> Question 2</h4>
+<div class="outline-text-4" id="text-4-2-2">
+<p>
+Afficher le salaire moyen par département en arrondissant la valeur à 2 chiffres après
+la virgule. Afficher aussi l’identifiant du département.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> D.Department_ID, ROUND(<span style="color: #8f0075;">AVG</span>(salary), 2)
+<span style="color: #5317ac;">FROM</span> Employees E
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Departments D
+<span style="color: #5317ac;">ON</span> E.Department_ID = D.Department_ID
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> D.Department_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2a9af88" class="outline-4">
+<h4 id="org2a9af88"><span class="section-number-4">4.2.3.</span> Question 3</h4>
+<div class="outline-text-4" id="text-4-2-3">
+<p>
+Afficher pour chaque département le nombre des employés qui lui
+sontaffectés. Le résultat doit s’afficher de cette manière:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">identifiant</th>
+<th scope="col" class="org-right">nbr d'employés</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">100</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-right">30</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">90</td>
+<td class="org-right">3</td>
+</tr>
+
+<tr>
+<td class="org-right">20</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">70</td>
+<td class="org-right">1</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">COUNT</span>(Employee_ID)
+<span style="color: #5317ac;">FROM</span> Employees E
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Departments D
+<span style="color: #5317ac;">ON</span> E.Department_ID = D.Department_ID
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> D.Department_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3927218" class="outline-4">
+<h4 id="org3927218"><span class="section-number-4">4.2.4.</span> Question 4</h4>
+<div class="outline-text-4" id="text-4-2-4">
+<p>
+Modifier la requête précédente pour avoir ces deux résultats:
+</p>
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">identifiant</th>
+<th scope="col" class="org-right">nbr d'employés</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">10</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">20</td>
+<td class="org-right">2</td>
+</tr>
+
+<tr>
+<td class="org-right">30</td>
+<td class="org-right">6</td>
+</tr>
+
+<tr>
+<td class="org-right">40</td>
+<td class="org-right">1</td>
+</tr>
+
+<tr>
+<td class="org-right">50</td>
+<td class="org-right">45</td>
+</tr>
+
+<tr>
+<td class="org-right">60</td>
+<td class="org-right">5</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> D.Department_ID <span style="color: #5317ac;">AS</span> "identifiant", <span style="color: #8f0075;">COUNT</span>(Employee_ID) <span style="color: #5317ac;">AS</span> "nbr des employes"
+<span style="color: #5317ac;">FROM</span> Employees E
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> Departments D
+<span style="color: #5317ac;">ON</span> E.Department_ID = D.Department_ID
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> D.Department_ID;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org36ec03a" class="outline-3">
+<h3 id="org36ec03a"><span class="section-number-3">4.3.</span> Partie 3</h3>
+<div class="outline-text-3" id="text-4-3">
+</div>
+<div id="outline-container-org1208438" class="outline-4">
+<h4 id="org1208438"><span class="section-number-4">4.3.1.</span> Question 1</h4>
+<div class="outline-text-4" id="text-4-3-1">
+<p>
+Afficher les noms et prénoms des employés et respectivement le nom du département
+auquel ils sont affectés.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> E.FIRST_NAME, E.LAST_NAME, D.DEPARTMENT_NAME
+<span style="color: #5317ac;">FROM</span> EMPLOYEES E
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> EMPLOYEES D
+<span style="color: #5317ac;">ON</span> E.DEPARTMENT_ID = D.DEPARTMENT_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8d53099" class="outline-4">
+<h4 id="org8d53099"><span class="section-number-4">4.3.2.</span> Question 2</h4>
+<div class="outline-text-4" id="text-4-3-2">
+<p>
+Afficher les colonnes suivantes:
+</p>
+<ul class="org-ul">
+<li><code>DEPARTMENT_NAME</code></li>
+<li><code>COUNTRY_NAME</code></li>
+<li><code>REGION_NAME</code></li>
+</ul>
+
+<p>
+Le résultat doit être trié par nom de département.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> D.DEPARTMENT_NAME, C.COUNTRY_NAME, R.REGION_NAME
+<span style="color: #5317ac;">FROM</span> DEPARTMENTS D
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> LOCATIONS L
+<span style="color: #5317ac;">ON</span> L.LOCATION_ID = D.LOCATION_ID
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> COUNTRIES C
+<span style="color: #5317ac;">ON</span> C.COUNTRY_ID = L.COUNTRY_ID
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> REGIONS R
+<span style="color: #5317ac;">ON</span> R.REGION_ID = C.REGION_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org143c19b" class="outline-4">
+<h4 id="org143c19b"><span class="section-number-4">4.3.3.</span> Question 3</h4>
+<div class="outline-text-4" id="text-4-3-3">
+<p>
+Afficher la liste des employés et respectivement le nom de leur <code>JOB_TITLE</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> E.*, J.JOB_TITLE
+<span style="color: #5317ac;">FROM</span> EMPLOYEES E
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> JOBS J
+<span style="color: #5317ac;">ON</span> J.JOB_ID = E.JOB_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6393527" class="outline-4">
+<h4 id="org6393527"><span class="section-number-4">4.3.4.</span> Question 4</h4>
+<div class="outline-text-4" id="text-4-3-4">
+<p>
+Afficher la somme du nombre de mois travaillés par tous les employés
+relativement à chaque département. Arrondir la valeur obtenue à 2
+chiffres après la virgule. Afficher le nom du département.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">SUM</span>(ROUND(<span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">MONTH</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE), 2))
+<span style="color: #5317ac;">FROM</span> EMPLOYEES E
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> DEPARTMENTS D
+<span style="color: #5317ac;">ON</span> D.DEPARTMENT_ID = E.DEPARTMENT_ID
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> D.DEPARTMENT_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbbcaa38" class="outline-4">
+<h4 id="orgbbcaa38"><span class="section-number-4">4.3.5.</span> Question 5</h4>
+<div class="outline-text-4" id="text-4-3-5">
+<p>
+Afficher pour chaque employé, son nom et prénom, et respectivement le
+nom et prénom de son manager.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> E.FIRST_NAME, E.LAST_NAME, <span style="color: #5317ac;">M</span>.FIRST_NAME, <span style="color: #5317ac;">M</span>.LAST_NAME
+<span style="color: #5317ac;">FROM</span> EMPLOYEES E
+<span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> EMPLOYEES <span style="color: #5317ac;">M</span>
+<span style="color: #5317ac;">ON</span> <span style="color: #5317ac;">M</span>.MANAGER_ID = E.EMPLOYEE_ID;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6a42eff" class="outline-3">
+<h3 id="org6a42eff"><span class="section-number-3">4.4.</span> Partie 4</h3>
+<div class="outline-text-3" id="text-4-4">
+</div>
+<div id="outline-container-org930c734" class="outline-4">
+<h4 id="org930c734"><span class="section-number-4">4.4.1.</span> Question 1</h4>
+<div class="outline-text-4" id="text-4-4-1">
+<p>
+Afficher la liste des départements auxquels aucun employé n'est affecté.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> D.*
+<span style="color: #5317ac;">FROM</span> DEPARTMENTS D
+<span style="color: #5317ac;">EXCEPT</span>
+<span style="color: #5317ac;">SELECT</span> D.*
+<span style="color: #5317ac;">FROM</span> DEPARTMENTS D, EMPLOYEES E
+<span style="color: #5317ac;">WHERE</span> D.DEPARTMENT_ID = E.DEPARTMENT_ID;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8116229" class="outline-4">
+<h4 id="org8116229"><span class="section-number-4">4.4.2.</span> Question 2</h4>
+<div class="outline-text-4" id="text-4-4-2">
+<p>
+Afficher les détails des employés dont le salaire est égal au salaire minimum.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> *
+<span style="color: #5317ac;">FROM</span> EMPLOYEES
+<span style="color: #5317ac;">WHERE</span> SALARY = ( <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MIN</span>(SALARY) <span style="color: #5317ac;">FROM</span> EMPLOYEES );
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdfed924" class="outline-4">
+<h4 id="orgdfed924"><span class="section-number-4">4.4.3.</span> Question 3</h4>
+<div class="outline-text-4" id="text-4-4-3">
+<p>
+Afficher les détails relatifs aux employés qui ont le même manager que l'employé dont
+l'identifiant est égal à 110.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> *
+<span style="color: #5317ac;">FROM</span> EMPLOYEES
+<span style="color: #5317ac;">WHERE</span> MANAGER_ID = ( <span style="color: #5317ac;">SELECT</span> MANAGER_ID <span style="color: #5317ac;">FROM</span> EMPLOYEES <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = 110);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga569548" class="outline-4">
+<h4 id="orga569548"><span class="section-number-4">4.4.4.</span> Question 4</h4>
+<div class="outline-text-4" id="text-4-4-4">
+<p>
+Afficher le résultat suivant&#x2026;
+</p>
+<div class="org-src-container">
+<pre class="src src-sql" id="org7a0514e"><span style="color: #505050;">/* This is the closest thing I have gotten to the answer :-( */</span>
+<span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">COUNT</span>(REGION_ID) <span style="color: #5317ac;">AS</span> "Liste", <span style="color: #8f0075;">COALESCE</span>(REGION_NAME, <span style="color: #2544bb;">'TOTAL'</span>) <span style="color: #5317ac;">AS</span> "Region"
+<span style="color: #5317ac;">FROM</span> REGIONS
+<span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> <span style="color: #5317ac;">ROLLUP</span> (REGION_NAME);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org124605b" class="outline-4">
+<h4 id="org124605b"><span class="section-number-4">4.4.5.</span> Question 5</h4>
+<div class="outline-text-4" id="text-4-4-5">
+<p>
+Afficher la liste des employés et respectivement le nom de leur JOB. (En utilisant une
+sous requête)
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> E.*, (<span style="color: #5317ac;">SELECT</span> J.JOB_TITLE
+             <span style="color: #5317ac;">FROM</span> JOBS J
+             <span style="color: #5317ac;">WHERE</span> J.JOB_ID = E.JOB_ID)
+<span style="color: #5317ac;">FROM</span> EMPLOYEES E;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3d40f39" class="outline-4">
+<h4 id="org3d40f39"><span class="section-number-4">4.4.6.</span> Question 6</h4>
+<div class="outline-text-4" id="text-4-4-6">
+<p>
+Afficher les employés qui touche un salaire supérieur à celui de tous les directeurs
+commerciaux (<code>JOB_ID='SA_MAN'</code>)
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> *
+<span style="color: #5317ac;">FROM</span> EMPLOYEES E
+<span style="color: #5317ac;">WHERE</span> SALARY &gt; (<span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(SALARY)
+                <span style="color: #5317ac;">FROM</span> EMPLOYEES E
+                <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> JOBS J
+                <span style="color: #5317ac;">ON</span> J.JOB_ID = E.JOB_ID
+                <span style="color: #5317ac;">WHERE</span> J.JOB_ID = <span style="color: #2544bb;">'SA_MAN'</span>);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcd96136" class="outline-4">
+<h4 id="orgcd96136"><span class="section-number-4">4.4.7.</span> Question 7</h4>
+<div class="outline-text-4" id="text-4-4-7">
+<p>
+Afficher la liste des employés qui gagnent moins que le salaire moyen de leur
+département.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">SELECT</span> *
+<span style="color: #5317ac;">FROM</span> EMPLOYEES E
+<span style="color: #5317ac;">WHERE</span> SALARY &lt; ( <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">AVG</span>(SALARY)
+                 <span style="color: #5317ac;">FROM</span> EMPLOYEES X
+                 <span style="color: #5317ac;">WHERE</span> E.DEPARTMENT_ID = X.DEPARTMENT_ID );
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgff87a70" class="outline-2">
+<h2 id="orgff87a70"><span class="section-number-2">5.</span> PL/SQL</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgccea3b5" class="outline-3">
+<h3 id="orgccea3b5"><span class="section-number-3">5.1.</span> Blocs Anonymes</h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-org1137013" class="outline-4">
+<h4 id="org1137013"><span class="section-number-4">5.1.1.</span> Question 1</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+Calculer et afficher la moyenne des salaires des employés qui travaillent dans les
+départements 20 et 30.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  MOY20 EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>;
+  MOY30 EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">AVG</span>(salary) <span style="color: #5317ac;">INTO</span> MOY20 <span style="color: #5317ac;">FROM</span> EMPLOYEES <span style="color: #5317ac;">WHERE</span> DEPARTMENT_ID = 20;
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">AVG</span>(salary) <span style="color: #5317ac;">INTO</span> MOY30 <span style="color: #5317ac;">FROM</span> EMPLOYEES <span style="color: #5317ac;">WHERE</span> DEPARTMENT_ID = 30;
+
+  DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Salaire moyenne du departement 20: '</span> || TO_CHAR(MOY20, <span style="color: #2544bb;">'999.99'</span>));
+  DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Salaire moyenne du departement 30: '</span> || TO_CHAR(MOY30, <span style="color: #2544bb;">'999.99'</span>));
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge0244e9" class="outline-4">
+<h4 id="orge0244e9"><span class="section-number-4">5.1.2.</span> Question 2</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+Afficher les détails du manager de l'employé 101.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  MANAGER EMPLOYEES%ROWTYPE;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> * 
+  <span style="color: #5317ac;">INTO</span> MANAGER
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES 
+  <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = (<span style="color: #5317ac;">SELECT</span> MANAGER_ID 
+                       <span style="color: #5317ac;">FROM</span> EMPLOYEES 
+                       <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = 101);
+
+  DBMS_OUTPUT.PUT_LINE(MANAGER.FIRST_NAME || <span style="color: #2544bb;">' '</span> || MANAGER.LAST_NAME);
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8140cd9" class="outline-4">
+<h4 id="org8140cd9"><span class="section-number-4">5.1.3.</span> Question 3</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+Echanger les salaires des employés 120 et 122.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  SALARY_120 EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>;
+  SALARY_122 EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> SALARY <span style="color: #5317ac;">INTO</span> SALARY_120 <span style="color: #5317ac;">FROM</span> EMPLOYEES <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = 120;
+  <span style="color: #5317ac;">SELECT</span> SALARY <span style="color: #5317ac;">INTO</span> SALARY_122 <span style="color: #5317ac;">FROM</span> EMPLOYEES <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = 122;
+
+  <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> SALARY = SALARY_120 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID=122;
+  <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> SALARY = SALARY_122 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID=120;
+
+  DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Swapped the two salaries'</span>);
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2890841" class="outline-4">
+<h4 id="org2890841"><span class="section-number-4">5.1.4.</span> Question 4</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<p>
+Augmenter le salaire de l'employé 115 sur la base des conditions suivantes:
+</p>
+<ul class="org-ul">
+<li>Si l'expérience est plus de 10 ans, augmenter le salaire de 20%</li>
+<li>Si l'expérience est supérieure à 5 ans, augmenter le salaire de 10%</li>
+<li>Sinon l'augmenter seulement de 5%</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  HIRE_DATE <span style="color: #5317ac;">NUMBER</span>;
+  ID <span style="color: #005a5f;">INTEGER</span> := 115;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> SYSDATE) - <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE)
+  <span style="color: #5317ac;">INTO</span> HIRE_DATE
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+
+  <span style="color: #5317ac;">CASE</span>
+    <span style="color: #5317ac;">WHEN</span> HIRE_DATE &gt; 10
+      <span style="color: #5317ac;">THEN</span> <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> SALARY = SALARY + SALARY * 0.2 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+    <span style="color: #5317ac;">WHEN</span> HIRE_DATE &gt; 5
+      <span style="color: #5317ac;">THEN</span> <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> SALARY = SALARY + SALARY * 0.1 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+    <span style="color: #5317ac;">ELSE</span>
+      <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> SALARY = SALARY + SALARY * 0.05 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+  <span style="color: #5317ac;">END</span> <span style="color: #5317ac;">CASE</span>;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e9368a" class="outline-4">
+<h4 id="org8e9368a"><span class="section-number-4">5.1.5.</span> Question 5</h4>
+<div class="outline-text-4" id="text-5-1-5">
+<p>
+Changer le pourcentage de commission comme suit pour l'employé avec l'ID égale à
+150:
+</p>
+<ul class="org-ul">
+<li>Si le salaire est supérieur à 10000, la commission est de 0,4%</li>
+<li>Si le salaire est inférieur à 10000, mais l'expérience est de plus de 10 ans, la commission est de 0,35%</li>
+<li>Si le salaire est inférieur à 3000 alors la commission est de 0,25%</li>
+<li>Dans les cas restants commission est de 0,15%</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  EMPLOYEE_SALARY EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>;
+  YEARS_SINCE_HIRED <span style="color: #5317ac;">NUMBER</span>;
+  ID <span style="color: #005a5f;">INTEGER</span> := 150;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> SYSDATE) - <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE)
+  <span style="color: #5317ac;">INTO</span> YEARS_SINCE_HIRED
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+
+  <span style="color: #5317ac;">SELECT</span> SALARY
+  <span style="color: #5317ac;">INTO</span> EMPLOYEE_SALARY
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+
+  <span style="color: #5317ac;">CASE</span>
+    <span style="color: #5317ac;">WHEN</span> EMPLOYEE_SALARY &gt; 10000
+      <span style="color: #5317ac;">THEN</span> <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> COMMISSION_PCT = 0.4 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+    <span style="color: #5317ac;">WHEN</span> EMPLOYEE_SALARY &lt; 3000
+      <span style="color: #5317ac;">THEN</span> <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> COMMISSION_PCT = 0.25 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+    <span style="color: #5317ac;">WHEN</span> EMPLOYEE_SALARY &lt; 10000 <span style="color: #5317ac;">AND</span> YEARS_SINCE_HIRED &gt; 10
+      <span style="color: #5317ac;">THEN</span> <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> COMMISSION_PCT = 0.35 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+    <span style="color: #5317ac;">ELSE</span> <span style="color: #5317ac;">UPDATE</span> EMPLOYEES <span style="color: #5317ac;">SET</span> COMMISSION_PCT = 0.15 <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID;
+  <span style="color: #5317ac;">END</span> <span style="color: #5317ac;">CASE</span>;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orgc39c55c" class="outline-3">
+<h3 id="orgc39c55c"><span class="section-number-3">5.2.</span> TP 1</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Gardez à l'esprit les notations suivantes lors de la lecture de cette section:
+</p>
+<ul class="org-ul">
+<li><code>CUR</code> désigne un <code>CURSOR</code></li>
+<li><code>REC</code> désigne un <code>RECORD</code></li>
+</ul>
+</div>
+
+<div id="outline-container-org97689f1" class="outline-4">
+<h4 id="org97689f1"><span class="section-number-4">5.2.1.</span> Question 1</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<p>
+Afficher pour chaque département:
+</p>
+<ul class="org-ul">
+<li>le nombre de ces employés</li>
+<li>le salaire le plus faible</li>
+<li>le salaire moyen</li>
+<li>le salaire le plus élevé</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_NUM_EMP <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> D.DEPARTMENT_ID,
+         <span style="color: #8f0075;">MIN</span>(E.SALARY) <span style="color: #5317ac;">AS</span> MIN_SAL,
+         <span style="color: #8f0075;">AVG</span>(E.SALARY) <span style="color: #5317ac;">AS</span> AVG_SAL,
+         <span style="color: #8f0075;">MAX</span>(E.SALARY) <span style="color: #5317ac;">AS</span> MAX_SAL,
+         <span style="color: #8f0075;">COUNT</span>(D.DEPARTMENT_ID) <span style="color: #5317ac;">AS</span> NUM_EMP
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES E
+  <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> DEPARTMENTS D
+  <span style="color: #5317ac;">ON</span> D.DEPARTMENT_ID = E.DEPARTMENT_ID
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> D.DEPARTMENT_ID;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">Fetch and print CUR_NUM_EMP's values.</span>
+  <span style="color: #5317ac;">FOR</span> R <span style="color: #5317ac;">IN</span> CUR_NUM_EMP
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Department ('</span>|| R.DEPARTMENT_ID ||<span style="color: #2544bb;">'):'</span>);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; Employees: '</span> || R.NUM_EMP);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; Minimum Salary: '</span> || R.MIN_SAL);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; Average Salary: '</span> || R.AVG_SAL);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; Maximum Salary: '</span> || R.MAX_SAL);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfe2400d" class="outline-4">
+<h4 id="orgfe2400d"><span class="section-number-4">5.2.2.</span> Question 2</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<p>
+Afficher les 6 premiers employés ayant les salaires les plus
+élevés. Pour chacun de ces employés, afficher leur nom, leur <code>JOB_ID</code>
+ainsi que leur salaire.  Ordonner le résultat de telle sorte que le
+premier employé est celui ayant le salaire le plus élevé.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+<span style="color: #5317ac;">CURSOR</span> CUR_HIGHEST_SAL <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> LAST_NAME, JOB_ID, SALARY
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> SALARY = (<span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(SALARY) <span style="color: #5317ac;">FROM</span> EMPLOYEES)
+  <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> SALARY <span style="color: #5317ac;">DESC</span>
+  <span style="color: #5317ac;">FETCH</span> <span style="color: #5317ac;">FIRST</span> 6 <span style="color: #5317ac;">ROWS</span> <span style="color: #5317ac;">ONLY</span>;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> R <span style="color: #5317ac;">IN</span> CUR_HIGHEST_SAL
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'NOM: '</span> || R.LAST_NAME);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'JOB_ID: '</span> || R.JOB_ID);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'SALAIRE: '</span> || R.SALARY);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaf45b4c" class="outline-4">
+<h4 id="orgaf45b4c"><span class="section-number-4">5.2.3.</span> Question 3</h4>
+<div class="outline-text-4" id="text-5-2-3">
+<p>
+Afficher le cinquième et dixième employé de la table <code>EMPLOYEES</code>.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMP <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> ROW_NUMBER() OVER (<span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> EMPLOYEE_ID) <span style="color: #5317ac;">AS</span> IDX, E.* <span style="color: #5317ac;">FROM</span> EMPLOYEES E;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> R <span style="color: #5317ac;">IN</span> CUR_EMP
+  LOOP
+    IF R.IDX = 5 <span style="color: #5317ac;">OR</span> R.IDX = 10
+      <span style="color: #5317ac;">THEN</span>
+        DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Index: '</span> || R.IDX);
+        DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; ID: '</span> || R.EMPLOYEE_ID);
+        DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; First Name: '</span> || R.FIRST_NAME);
+        DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; Last Name: '</span> || R.LAST_NAME);
+    <span style="color: #5317ac;">END</span> IF;
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+
+<p>
+Afficher un état de tous les pays et les villes correspondantes pour tous les
+départements. Pour ce faire utiliser les tables <code>COUNTRIES</code> et <code>LOCATIONS</code>.
+Dans un premier curseur, afficher à partir de la table <code>COUNTRIES</code>, le pays ainsi que
+son <code>ID</code>. Dans un deuxième curseur paramétré, extraire le(les) ville(s) et le(les)
+<code>STATE_PROVINCE</code> relatif à chaque pays.
+Trier les villes par ordre croissant de leur <code>ID</code> et les villes par ordre croissant de leur
+nom.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">Get countries and their respective ID.</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_COUNTRIES <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> C.COUNTRY_NAME, C.COUNTRY_ID
+  <span style="color: #5317ac;">FROM</span> COUNTRIES C;
+
+  <span style="color: #505050;">-- </span><span style="color: #505050;">Get the city and state province of </span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">a particular record in CUR_COUNTRIES.</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_CITIES (REC CUR_COUNTRIES%ROWTYPE) <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> L.CITY, L.STATE_PROVINCE
+  <span style="color: #5317ac;">FROM</span> LOCATIONS L, COUNTRIES C
+  <span style="color: #5317ac;">WHERE</span> C.COUNTRY_ID = L.COUNTRY_ID
+  <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> L.CITY;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">The question is unclear as to what should be accomplished.</span>
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4a7fce2" class="outline-4">
+<h4 id="org4a7fce2"><span class="section-number-4">5.2.4.</span> Question 5</h4>
+<div class="outline-text-4" id="text-5-2-4">
+<p>
+Ecrivez un bloc PL/SQL qui déclare et utilise des curseurs avec des paramètres. Dans
+une boucle, utilisez un curseur pour extraire et afficher, à partir de la table
+departments, le numéro et le nom de tous les départements pour lesquels la valeur
+<code>DEPARTMENT_ID</code> est inférieure à 100.
+</p>
+
+<p>
+Transmettez le numéro du département à un autre curseur en tant que paramètre pour
+extraire de la table employees les informations (nom de famille, poste, date
+d'embauche et salaire) concernant les employés travaillant dans ce département et dont
+la valeur <code>EMPLOYEE_ID</code> est inférieure à 120.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">Extract deparments whose ID is less than 100</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_DEPT <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> DEPARTMENT_ID, DEPARTMENT_NAME
+  <span style="color: #5317ac;">FROM</span> DEPARTMENTS
+  <span style="color: #5317ac;">WHERE</span> DEPARTMENT_ID &lt; 100;
+
+  <span style="color: #505050;">-- </span><span style="color: #505050;">Extract employees whose ID is fewer</span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">than 120, who also work in departments</span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">returned by CUR_DEPTS.</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMP (REC CUR_DEPT%ROWTYPE) <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> E.LAST_NAME, J.JOB_TITLE, E.HIRE_DATE, E.SALARY
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES E
+  <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> JOBS J
+  <span style="color: #5317ac;">ON</span> J.JOB_ID = E.JOB_ID
+  <span style="color: #5317ac;">WHERE</span> E.DEPARTMENT_ID = REC.DEPARTMENT_ID <span style="color: #5317ac;">AND</span> E.EMPLOYEE_ID &lt; 120;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> REC_D <span style="color: #5317ac;">IN</span> CUR_DEPT
+  LOOP
+     <span style="color: #5317ac;">FOR</span> REC_E <span style="color: #5317ac;">IN</span> CUR_EMP (REC_D)
+     LOOP
+       DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Last name: '</span>|| REC_E.LAST_NAME);
+       DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Position: '</span> || REC_E.JOB_TITLE);
+       DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Hire Date: '</span> || REC_E.HIRE_DATE);
+       DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Salary: '</span> || REC_E.SALARY);
+     <span style="color: #5317ac;">END</span> LOOP;
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3fc3832" class="outline-4">
+<h4 id="org3fc3832"><span class="section-number-4">5.2.5.</span> Question 6</h4>
+<div class="outline-text-4" id="text-5-2-5">
+<p>
+Afficher l'année où un nombre maximal d'employés a été embauché en précisant le
+nombre de personnes embauchées chaque mois de cette année.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">DECLARE</span>
+  YEAR_MAX_EMPLOYMENTS <span style="color: #5317ac;">NUMBER</span>;
+
+  <span style="color: #505050;">-- </span><span style="color: #505050;">Get the number of people hired in each month for a given year (YYYY).</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMP_PER_MONTH (YYYY <span style="color: #5317ac;">NUMBER</span>) <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">MONTH</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) <span style="color: #5317ac;">AS</span> MM, <span style="color: #8f0075;">COUNT</span>(EMPLOYEE_ID) <span style="color: #5317ac;">AS</span> EMPS
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) = YYYY
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">MONTH</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) <span style="color: #5317ac;">ORDER</span> <span style="color: #5317ac;">BY</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">MONTH</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE);
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #505050;">-- </span><span style="color: #505050;">Get the year when a maximum number of employees were hired.</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE)
+  <span style="color: #5317ac;">INTO</span> YEAR_MAX_EMPLOYMENTS
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE)
+  <span style="color: #5317ac;">HAVING</span> <span style="color: #8f0075;">COUNT</span>(EMPLOYEE_ID) = (
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">MAX</span>(<span style="color: #8f0075;">COUNT</span>(EMPLOYEE_ID))
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE));
+
+  DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Year of maximum employments: '</span> || YEAR_MAX_EMPLOYMENTS);
+
+  <span style="color: #5317ac;">FOR</span> R <span style="color: #5317ac;">IN</span> CUR_EMP_PER_MONTH (YEAR_MAX_EMPLOYMENTS)
+    LOOP
+       DBMS_OUTPUT.PUT_LINE(TO_CHAR(TO_DATE(R.MM, <span style="color: #2544bb;">'MM'</span>), <span style="color: #2544bb;">'Month'</span>));
+       DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; People hired: '</span> || R.EMPS);
+    <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org387694b" class="outline-3">
+<h3 id="org387694b"><span class="section-number-3">5.3.</span> TP 2</h3>
+<div class="outline-text-3" id="text-5-3">
+</div>
+
+<div id="outline-container-orgf24c674" class="outline-4">
+<h4 id="orgf24c674"><span class="section-number-4">5.3.1.</span> Question 1</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+Ecrire une fonction stockée <code>FN_NBREDEPARTEMENT</code> permettant de retourner le
+nombre total des départements.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">FUNCTION</span> <span style="color: #721045;">FN_NBREDEPARTEMENT</span>
+<span style="color: #5317ac;">RETURN</span> <span style="color: #5317ac;">NUMBER</span>
+<span style="color: #5317ac;">IS</span>
+  TOTAL_DEPTS <span style="color: #5317ac;">NUMBER</span> := 0;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">COUNT</span>(*) <span style="color: #5317ac;">INTO</span> TOTAL_DEPTS <span style="color: #5317ac;">FROM</span> DEPARTMENTS;
+
+  <span style="color: #5317ac;">RETURN</span> TOTAL_DEPTS;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2e0491c" class="outline-4">
+<h4 id="org2e0491c"><span class="section-number-4">5.3.2.</span> Question 2</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+Ecrire une fonction stockée <code>FN_NOMDEPT</code> qui prend en paramètre l'id de
+l'employé et qui retourne le nom du département auquel il est associé.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">FUNCTION</span> <span style="color: #721045;">FN_NOMDEPT</span> (EMP_ID <span style="color: #5317ac;">IN</span> EMPLOYEES.EMPLOYEE_ID%<span style="color: #5317ac;">TYPE</span>)
+<span style="color: #5317ac;">RETURN</span> DEPARTMENTS.DEPARTMENT_NAME%<span style="color: #5317ac;">TYPE</span>
+<span style="color: #5317ac;">IS</span>
+  DEPT_NAME DEPARTMENTS.DEPARTMENT_NAME%<span style="color: #5317ac;">TYPE</span>;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> D.DEPARTMENT_NAME
+  <span style="color: #5317ac;">INTO</span> DEPT_NAME
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES E
+  <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> DEPARTMENTS D
+  <span style="color: #5317ac;">ON</span> D.DEPARTMENT_ID = E.DEPARTMENT_ID
+  <span style="color: #5317ac;">WHERE</span> E.EMPLOYEE_ID = EMP_ID;
+
+  <span style="color: #5317ac;">RETURN</span> DEPT_NAME;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2366ffc" class="outline-4">
+<h4 id="org2366ffc"><span class="section-number-4">5.3.3.</span> Question 3</h4>
+<div class="outline-text-4" id="text-5-3-3">
+<p>
+Ecrire une fonction stockée <code>FN_SALAIRE</code> qui retourne le salaire d'un employé
+dont l'identifiant est donné en paramètre d'entrée.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">FUNCTION</span> <span style="color: #721045;">FN_SALAIRE</span> (EMP_ID <span style="color: #5317ac;">IN</span> EMPLOYEES.EMPLOYEE_ID%<span style="color: #5317ac;">TYPE</span>)
+<span style="color: #5317ac;">RETURN</span> EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>
+<span style="color: #5317ac;">IS</span>
+  SAL EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> SALARY
+  <span style="color: #5317ac;">INTO</span> SAL
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES E
+  <span style="color: #5317ac;">WHERE</span> E.EMPLOYEE_ID = EMP_ID;
+
+  <span style="color: #5317ac;">RETURN</span> SAL;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9c7ac1" class="outline-4">
+<h4 id="orgc9c7ac1"><span class="section-number-4">5.3.4.</span> Question 4</h4>
+<div class="outline-text-4" id="text-5-3-4">
+<p>
+Ecrire une fonction stockée <code>FN_NBR_SALARIE</code> qui prend en paramètre le numéro
+d'un département et retourne le nombre de ces salariés.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">FUNCTION</span> <span style="color: #721045;">FN_NBR_SALARIE</span>( DEPT_ID <span style="color: #5317ac;">IN</span> DEPARTMENTS.DEPARTMENT_ID%<span style="color: #5317ac;">TYPE</span>)
+<span style="color: #5317ac;">RETURN</span>
+  DEPARTMENTS.DEPARTMENT_ID%<span style="color: #5317ac;">TYPE</span>
+<span style="color: #5317ac;">IS</span>
+  TOTAL_EMPS <span style="color: #5317ac;">NUMBER</span>;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">COUNT</span>(*)
+  <span style="color: #5317ac;">INTO</span> TOTAL_EMPS
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> DEPARTMENT_ID
+  <span style="color: #5317ac;">HAVING</span> DEPARTMENT_ID = DEPT_ID;
+
+  <span style="color: #5317ac;">RETURN</span> TOTAL_EMPS;
+<span style="color: #5317ac;">END</span>;
+/ 
+</pre>
+</div>
+
+<p>
+Traduire cette fonction en une procédure stockée <code>PROC_NBR_SALARIE</code>:
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_NBR_SALARIE</span>( DEPT_ID <span style="color: #5317ac;">IN</span> DEPARTMENTS.DEPARTMENT_ID%<span style="color: #5317ac;">TYPE</span>, EMPS <span style="color: #5317ac;">OUT</span> <span style="color: #5317ac;">NUMBER</span>)
+<span style="color: #5317ac;">IS</span>
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">COUNT</span>(*)
+  <span style="color: #5317ac;">INTO</span> EMPS
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> DEPARTMENT_ID
+  <span style="color: #5317ac;">HAVING</span> DEPARTMENT_ID = DEPT_ID;
+<span style="color: #5317ac;">END</span>;
+/ 
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge552889" class="outline-4">
+<h4 id="orge552889"><span class="section-number-4">5.3.5.</span> Question 5</h4>
+<div class="outline-text-4" id="text-5-3-5">
+<p>
+Ecrire une procédure stockée <code>PROC_TEST_NBR_SALARIE</code> qui permet d'afficher les
+noms des départements dont le nombre des salariés est supérieur à 40.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_TEST_NBR_SALARIE</span>
+<span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_DEPS <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> D.DEPARTMENT_NAME <span style="color: #5317ac;">FROM</span> EMPLOYEES E
+  <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> DEPARTMENTS D
+  <span style="color: #5317ac;">ON</span> E.DEPARTMENT_ID = D.DEPARTMENT_ID
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> D.DEPARTMENT_ID, D.DEPARTMENT_NAME
+  <span style="color: #5317ac;">HAVING</span> <span style="color: #8f0075;">COUNT</span>(E.EMPLOYEE_ID) &gt; 40;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> REC <span style="color: #5317ac;">IN</span> CUR_DEPS
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Department: '</span> || REC.DEPARTMENT_NAME);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgabfe95c" class="outline-4">
+<h4 id="orgabfe95c"><span class="section-number-4">5.3.6.</span> Question 6</h4>
+<div class="outline-text-4" id="text-5-3-6">
+<p>
+Ecrire une procédure stockée <code>PROC_ANNEE_DEMBAUCHE</code> permettant d'afficher
+les années au cours desquelles plus de 10 salariés ont été embauché.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_ANNEE_DEMBAUCHE</span>
+<span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_YEARS <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE) <span style="color: #5317ac;">AS</span> YYYY
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> <span style="color: #8f0075;">EXTRACT</span>(<span style="color: #5317ac;">YEAR</span> <span style="color: #5317ac;">FROM</span> HIRE_DATE)
+  <span style="color: #5317ac;">HAVING</span> <span style="color: #8f0075;">COUNT</span>(EMPLOYEE_ID) &gt; 10;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> REC <span style="color: #5317ac;">IN</span> CUR_YEARS
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Year: '</span> || REC.YYYY);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org18fdcd9" class="outline-4">
+<h4 id="org18fdcd9"><span class="section-number-4">5.3.7.</span> Question 7</h4>
+<div class="outline-text-4" id="text-5-3-7">
+<p>
+Ecrire une procédure stockée <code>PROC_JOBHISTORY</code> permettant d'afficher
+la liste des employés qui ont changé de poste au minimum une fois.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_JOBHISTORY</span>
+<span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMPS <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES E
+  <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> JOB_HISTORY J
+  <span style="color: #5317ac;">ON</span> J.EMPLOYEE_ID = E.EMPLOYEE_ID
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> E.EMPLOYEE_ID, E.FIRST_NAME, E.LAST_NAME
+  <span style="color: #5317ac;">HAVING</span> <span style="color: #8f0075;">COUNT</span>(*) &gt; 1;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> REC <span style="color: #5317ac;">IN</span> CUR_EMPS
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Employee ID: '</span> || REC.EMPLOYEE_ID);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; First Name: '</span> || REC.FIRST_NAME);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; Last Name: '</span> || REC.LAST_NAME);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc1dee97" class="outline-4">
+<h4 id="orgc1dee97"><span class="section-number-4">5.3.8.</span> Question 8</h4>
+<div class="outline-text-4" id="text-5-3-8">
+<p>
+Ecrire une procédure stockée <code>PROC_LISTE_DES_EMP</code> permettant
+d'afficher la liste de tous employés.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_LISTE_DES_EMP</span>
+<span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMPS <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> * <span style="color: #5317ac;">FROM</span> EMPLOYEES;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> REC <span style="color: #5317ac;">IN</span> CUR_EMPS
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || <span style="color: #2544bb;">'ID: '</span> || REC.EMPLOYEE_ID);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'First Name: '</span> || REC.FIRST_NAME);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Last Name: '</span> || REC.LAST_NAME);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgac9729b" class="outline-4">
+<h4 id="orgac9729b"><span class="section-number-4">5.3.9.</span> Question 9</h4>
+<div class="outline-text-4" id="text-5-3-9">
+<p>
+Ecrire une procédure stockée <code>PROC_LISTE_EMP_DEPT</code> permettant d'afficher pour
+chaque département la liste de ces employés. Afficher leur nom et
+prénom.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_LISTE_EMP_DEPT</span>
+<span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_DEPS <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> DEPARTMENT_ID <span style="color: #5317ac;">FROM</span> DEPARTMENTS;
+
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMPS (REC CUR_DEPS%ROWTYPE) <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> FIRST_NAME, LAST_NAME <span style="color: #5317ac;">FROM</span> EMPLOYEES <span style="color: #5317ac;">WHERE</span> DEPARTMENT_ID = REC.DEPARTMENT_ID;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> DEP <span style="color: #5317ac;">IN</span> CUR_DEPS
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'--------------'</span>);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Department: '</span> || DEP.DEPARTMENT_ID);
+
+    <span style="color: #5317ac;">FOR</span> EMP <span style="color: #5317ac;">IN</span> CUR_EMPS (DEP)
+    LOOP
+      DBMS_OUTPUT.PUT_LINE(CHR(10) || <span style="color: #2544bb;">'&gt; Last Name: '</span> || EMP.LAST_NAME);
+      DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'&gt; First Name: '</span> || EMP.FIRST_NAME);
+    <span style="color: #5317ac;">END</span> LOOP;
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org14cbc54" class="outline-4">
+<h4 id="org14cbc54"><span class="section-number-4">5.3.10.</span> Question 10</h4>
+<div class="outline-text-4" id="text-5-3-10">
+<p>
+Ecrire une procédure stockée <code>PROC_LISTE_EMP</code> permettant d'afficher la
+liste des employés dirigés par le manager dont l'identifiant est donné
+comme paramètre d'entrée. Affichez leurs noms et prénoms et leurs
+salaires.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_LISTE_EMP</span> ( MGR_ID <span style="color: #5317ac;">IN</span> EMPLOYEES.MANAGER_ID%<span style="color: #5317ac;">TYPE</span> )
+<span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMPS <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> LAST_NAME, FIRST_NAME, SALARY <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> MANAGER_ID = MGR_ID;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> REC <span style="color: #5317ac;">IN</span> CUR_EMPS
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || <span style="color: #2544bb;">'Last Name: '</span> || REC.LAST_NAME);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'First Name: '</span> || REC.FIRST_NAME);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Salary: '</span> || REC.SALARY);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7f1a91b" class="outline-4">
+<h4 id="org7f1a91b"><span class="section-number-4">5.3.11.</span> Question 11</h4>
+<div class="outline-text-4" id="text-5-3-11">
+<p>
+Ecrire une fonction stockée <code>FN_MOY_SALAIRE</code> qui retourne le salaire
+moyen du département auquel appartient l'employé dont l'identifiant
+est donné comme paramètre d'entrée.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">FUNCTION</span> <span style="color: #721045;">FN_MOY_SALAIRE</span> (ID <span style="color: #5317ac;">IN</span> EMPLOYEES.EMPLOYEE_ID%<span style="color: #5317ac;">TYPE</span>)
+<span style="color: #5317ac;">RETURN</span>
+  EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>
+<span style="color: #5317ac;">IS</span>
+  AVERAGE EMPLOYEES.SALARY%<span style="color: #5317ac;">TYPE</span>;
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">SELECT</span> <span style="color: #8f0075;">AVG</span>(SALARY) <span style="color: #5317ac;">INTO</span> AVERAGE
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">GROUP</span> <span style="color: #5317ac;">BY</span> DEPARTMENT_ID
+  <span style="color: #5317ac;">HAVING</span> DEPARTMENT_ID = (
+    <span style="color: #5317ac;">SELECT</span> D.DEPARTMENT_ID
+    <span style="color: #5317ac;">FROM</span> DEPARTMENTS D
+    <span style="color: #5317ac;">INNER</span> <span style="color: #5317ac;">JOIN</span> EMPLOYEES E
+    <span style="color: #5317ac;">ON</span> D.DEPARTMENT_ID = E.DEPARTMENT_ID
+    <span style="color: #5317ac;">WHERE</span> E.EMPLOYEE_ID = ID
+  );
+
+  <span style="color: #5317ac;">RETURN</span> AVERAGE;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org751c0c0" class="outline-4">
+<h4 id="org751c0c0"><span class="section-number-4">5.3.12.</span> Question 12</h4>
+<div class="outline-text-4" id="text-5-3-12">
+<p>
+Ecrire une procédure stockée <code>PROC_SAL_SUP</code> qui permet d'afficher la
+liste des employés qui ont un salaire supérieur à celui dont
+l'identifiant est donné en paramètre.
+</p>
+
+<p>
+Utilisez cette procédure pour afficher ceux qui ont un salaire
+supérieur à l'employé 121.
+</p>
+<div class="org-src-container">
+<pre class="src src-sql"><span style="color: #5317ac;">CREATE</span> <span style="color: #5317ac;">OR</span> REPLACE <span style="color: #5317ac;">PROCEDURE</span> <span style="color: #721045;">PROC_SAL_SUP</span> (ID <span style="color: #5317ac;">IN</span> EMPLOYEES.EMPLOYEE_ID%<span style="color: #5317ac;">TYPE</span>)
+<span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">CURSOR</span> CUR_EMPS <span style="color: #5317ac;">IS</span>
+  <span style="color: #5317ac;">SELECT</span> *
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> SALARY &gt; ( <span style="color: #5317ac;">SELECT</span> SALARY
+  <span style="color: #5317ac;">FROM</span> EMPLOYEES
+  <span style="color: #5317ac;">WHERE</span> EMPLOYEE_ID = ID);
+<span style="color: #5317ac;">BEGIN</span>
+  <span style="color: #5317ac;">FOR</span> REC <span style="color: #5317ac;">IN</span> CUR_EMPS
+  LOOP
+    DBMS_OUTPUT.PUT_LINE(CHR(10) || <span style="color: #2544bb;">'ID: '</span> || REC.EMPLOYEE_ID);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'First Name: '</span> || REC.FIRST_NAME);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Last Name: '</span> || REC.LAST_NAME);
+    DBMS_OUTPUT.PUT_LINE(<span style="color: #2544bb;">'Salary: '</span> || REC.SALARY);
+  <span style="color: #5317ac;">END</span> LOOP;
+<span style="color: #5317ac;">END</span>;
+/
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Aziz Ben Ali (<a href="mailto:ba.tahaaziz@gmail.com">ba.tahaaziz@gmail.com</a>)</p>
+</div>
+</body>
+</html>

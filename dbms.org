@@ -4,6 +4,10 @@
 * Introduction
 
 *** Créer des tables
+Dans l'exemple suivant, les contraintes seront définies sur la même
+ligne que les définitions de colonne.
+
+Le mot clé =CONSTRAINT= peut être omis.
 
 #+begin_src sql
 CREATE TABLE joueurs (
@@ -16,10 +20,8 @@ CREATE TABLE joueurs (
 );
 #+end_src
 
-Dans l'exemple suivant, les contraintes seront définies sur la même
-ligne que les définitions de colonne.
-
-Le mot clé =CONSTRAINT= peut être omis.
+Pour garder nos définitions de colonne bien rangées, nous pouvons
+définir nos contraintes à la fin de la requête.
 
 #+begin_src sql
 CREATE TABLE joueurs (
@@ -34,9 +36,6 @@ CREATE TABLE joueurs (
     CONSTRAINT pk_joueur PRIMARY KEY,
 );
 #+end_src
-
-Pour garder nos définitions de colonne bien rangées, nous pouvons
-définir nos contraintes à la fin de la requête.
 
 *** Afficher la structure des tables
 

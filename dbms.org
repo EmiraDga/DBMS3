@@ -1549,7 +1549,7 @@ respectivement les messages suivants: "Début d'insertion" et "Fin
 d'insertion".
 
 #+begin_src sql
-CREATE OR REPLACE TRIGGER EMP_PRINT_AFTER
+CREATE OR REPLACE TRIGGER EMP_PRINT_BEFORE
 BEFORE INSERT ON EMPLOYEES
 FOR EACH ROW
 BEGIN

@@ -1,22 +1,20 @@
 #+TITLE: grtcdr's DBMS course notes
 
-* Preface
-Hey there, third year students!
-
 This repository houses [[https://grtcdr.github.io][grtcdr]]'s personal notes for ESPRIT's 3rd year Database Management Systems class.
 
-Go on, [[file:dbms.org][have a read!]]
-
 * Get started
-To grab yourself a copy of this repository, run the following in your terminal emulator:
+To grab yourself a copy of this repository, run the following:
 
 #+begin_src bash
 git clone https://github.com/vivmaniero/DBMS3
 #+end_src
 
+These notes are written in [[https://orgmode.org][Org format]], a major mode for [[https://www.gnu.org/software/emacs/][Emacs]], and can be tangled into source code with the help of [[https://orgmode.org/worg/org-contrib/babel/][Babel]].
+
+If you're not familiar with any of the aforementioned software, you should view [[file:dbms.org][the document]] in your browser.
+
 * Contributing
 If you notice any issues or typos, please [[https://github.com/grtcdr/ESPRIT-DBMS-Y3/issues][file an issue]], or [[https://github.com/vivmaniero/ESPRIT-DBMS-Y3/pulls][submit a PR]] directly.
-These notes are written in [[https://orgmode.org][Org format]], a major mode for [[https://www.gnu.org/software/emacs/][Emacs]], and can be tangled into source code with the help of [[https://orgmode.org/worg/org-contrib/babel/][Babel]].
 
 * Copying
 /Source code/ is licensed under the [[file:COPYING][MIT license]].

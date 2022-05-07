@@ -1,4 +1,4 @@
-#+TITLE: grtcdr's DBMS course notes
+#+TITLE: vivmaniero/DBMS3
 
 This repository houses [[https://grtcdr.github.io][grtcdr]]'s personal notes for ESPRIT's 3rd year Database Management Systems class.
 

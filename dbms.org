@@ -1,5 +1,5 @@
 #+TITLE: DBMS
-#+OPTIONS: html-postamble:t toc:1
+#+OPTIONS: html-postamble:t toc:t
 
 #+begin_export ascii
 MIT License
